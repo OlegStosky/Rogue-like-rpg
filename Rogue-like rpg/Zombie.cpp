@@ -6,6 +6,7 @@ using namespace std;
 void Zombie::recieveDamage(int damage)
 {
 	_hp -= damage;
+
 	ostringstream convert;
 	convert << damage;
 	Game::getInstance().pushLogMessage("Zombie recieved " + convert.str() + " damage.\n");
@@ -13,6 +14,7 @@ void Zombie::recieveDamage(int damage)
 	convert.clear();
 	convert << _hp;
 	Game::getInstance().pushLogMessage("Zombie has " + convert.str() + " hp left.\n");
+
 	if (_hp <= 0)
 	{
 		Game::getInstance().pushLogMessage("Zombie died.\n");

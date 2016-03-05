@@ -6,9 +6,11 @@ using namespace std;
 void Princess::recieveDamage(int damage)
 {
 	_hp -= damage;
+
 	ostringstream  convert;
 	convert << damage;
 	Game::getInstance().pushLogMessage("Princess recieved " + convert.str() + " damage\n");
+
 	if (_hp <= 0)
 	{
 		throw std::runtime_error(princess_death_message);
@@ -41,6 +43,7 @@ void Princess::move(Map *map)
 	{
 		return;
 	}
+
 	monster->recieveDamage(damage());
 	if (monster->isDead())
 	{

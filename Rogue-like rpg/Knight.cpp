@@ -10,9 +10,11 @@ Knight::Knight(int x, int y, int hp) : Character(x, y, hp)
 void Knight::recieveDamage(int damage)
 {
 	_hp -= damage;
+
 	ostringstream convert;
 	convert << damage;
 	Game::getInstance().pushLogMessage("You recieved " + convert.str() + " damage\n");
+
 	if (_hp <= 0)
 	{
 		throw std::runtime_error(hero_death_message);
@@ -49,6 +51,7 @@ void Knight::move(Map *map)
 	int newY = y() + _dir.second;
 	if ((x() == newX) && (y() == newY))
 		return;
+
 	if (map->isValidCell(newX, newY))
 	{
 		if (map->isPrincess(newX, newY))
@@ -56,6 +59,7 @@ void Knight::move(Map *map)
 			cout << "You won!" << endl;
 			Game::getInstance().setGameState("exiting");
 		}
+
 		if (map->isZombie(newX, newY))
 		{
 			Character *zombie = Game::getInstance().findMonster(newX, newY);
@@ -63,6 +67,7 @@ void Knight::move(Map *map)
 			{
 				throw std::runtime_error(null_zombie_message);
 			}
+
 			zombie->recieveDamage(damage());
 			if (zombie->isDead())
 			{
@@ -80,6 +85,7 @@ void Knight::move(Map *map)
 
 			return;
 		}
+
 		if (map->isStone(newX, newY))
 		{
 			return;

@@ -20,7 +20,7 @@ public:
 
 	static Game& getInstance();
 
-	void setGameState(std::string state); //todo
+	void setGameState(std::string state);
 	inline Character* getHero(){ return _hero; }
 	inline Character* getPrincess(){ return _princess; }
 
