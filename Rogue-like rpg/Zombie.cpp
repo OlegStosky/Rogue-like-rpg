@@ -20,6 +20,8 @@ void Zombie::move(Map *map)
 				cout << princess_death_message;
 				Game::getInstance().setGameState("exiting");
 			}
+
+			return;
 		}
 
 		if (map->isStone(newX, newY))
@@ -40,8 +42,11 @@ void Zombie::move(Map *map)
 				cout << hero_death_message;
 				Game::getInstance().setGameState("exiting");
 			}
+			return;
 		}
 
 		map->move(x(), y(), newX, newY);
+		setX(newX);
+		setY(newY);
 	}
 }

@@ -57,8 +57,8 @@ void Map::clearCell(int y, int x)
 
 bool Map::isValidCell(int x, int y)
 {
-	return (x <= width) && (x >= 0) && 
-		(y <= height) && (y >= 0);
+	return (x <= width - 1) && (x >= 0) && 
+		(y <= height - 1) && (y >= 0);
 }
 
 bool Map::isPrincess(int x, int y)

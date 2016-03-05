@@ -35,6 +35,8 @@ void Knight::move(Map *map)
 	
 	int newX = x() + _dir.first;
 	int newY = y() + _dir.second;
+	if ((x() == newX) && (y() == newY))
+		return;
 	if (map->isValidCell(newX, newY))
 	{
 		if (map->isPrincess(newX, newY))
@@ -62,6 +64,8 @@ void Knight::move(Map *map)
 					return;
 				}
 			}
+
+			return;
 		}
 		if (map->isStone(newX, newY))
 		{
@@ -69,7 +73,8 @@ void Knight::move(Map *map)
 		}
 
 		map->move(x(), y(), newX, newY);
-		
+		setX(newX);
+		setY(newY);
 	}
 }
 

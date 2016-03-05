@@ -2,8 +2,8 @@
 
 #include <string>
 
-const int width			= 5;
-const int height		= 5;
+const int width			= 10;
+const int height		= 10;
 
 const int hero_hp		= 100;
 const int zombie_hp		= 30;
