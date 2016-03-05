@@ -56,7 +56,8 @@ void Game::start()
 void Game::draw()
 {
 	_map->draw();
-	cout << _hero->hitPoints() << endl;
+	cout << "Your hp : " << _hero->hitPoints() << endl;
+	cout << "Princess hp : " << _princess->hitPoints() << endl;
 	while (!_logMessages.empty())
 	{
 		cout << _logMessages.front();

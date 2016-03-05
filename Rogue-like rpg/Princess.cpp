@@ -47,6 +47,7 @@ void Princess::move(Map *map)
 	monster->recieveDamage(damage());
 	if (monster->isDead())
 	{
+		Game::getInstance().deleteMonster(monster);
 		map->clearCell(monster->x(), monster->y());
 	}
 }

@@ -11,7 +11,7 @@ const int princess_hp	= 50;
 
 const int hero_damage	= 15;
 const int zombie_damage = 10;
-const int princess_damage = 1;
+const int princess_damage = 10;
 
 const std::string princess_death_message = "Princess is dead. You lost!";
 const std::string hero_death_message = "Hero is dead";
