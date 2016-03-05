@@ -14,4 +14,5 @@ public:
 	
 	Character* findMonster(Map *map) const;
 	void move(Map *map) override;
+	void recieveDamage(int damage) override;
 };

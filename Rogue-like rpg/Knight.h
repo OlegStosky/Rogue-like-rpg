@@ -15,6 +15,7 @@ public:
 	inline int damage(){ return hero_damage; }
 	const Direction& direction(){ return _dir; }
 
+	void recieveDamage(int damage) override;
 	void setDirection(std::string dir);
 	void move(Map *map);
 };

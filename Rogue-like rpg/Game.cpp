@@ -23,7 +23,7 @@ Game::Game()
 				_hero = new Knight(j, i, hero_hp);
 				break;
 			case 'Z':
-				_monsters.push_back(new Zombie(j, i, hero_hp));
+				_monsters.push_back(new Zombie(j, i, zombie_hp));
 				break;
 			case 'P':
 				_princess = new Princess(j, i, princess_hp);

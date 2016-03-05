@@ -1,6 +1,15 @@
 #include "Game.h"
 #include "Princess.h"
 
+void Princess::recieveDamage(int damage)
+{
+	_hp -= damage;
+	if (_hp <= 0)
+	{
+		throw std::runtime_error(princess_death_message);
+	}
+}
+
 Character* Princess::findMonster(Map *map) const
 {
 	for (int i = -1; i <= 1; ++i)

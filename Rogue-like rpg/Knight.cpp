@@ -7,6 +7,15 @@ Knight::Knight(int x, int y, int hp) : Character(x, y, hp)
 {
 }
 
+void Knight::recieveDamage(int damage)
+{
+	_hp -= damage;
+	if (_hp <= 0)
+	{
+		throw std::runtime_error(hero_death_message);
+	}
+}
+
 void Knight::setDirection(std::string dir)
 {
 	if (dir == "down")
@@ -57,6 +66,7 @@ void Knight::move(Map *map)
 				try
 				{
 					Game::getInstance().deleteMonster(zombie);
+					map->clearCell(newX, newY);
 				}
 				catch (exception &e)
 				{

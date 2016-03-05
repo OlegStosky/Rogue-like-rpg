@@ -13,5 +13,6 @@ public:
 	inline char symbol() override { return 'z'; }
 	inline int damage() const override { return zombie_damage; }
 
+	Character* findEnemy(Map *map);
 	void move(Map *map) override;
 };

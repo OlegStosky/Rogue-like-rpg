@@ -3,8 +3,58 @@
 
 using namespace std;
 
+Character* Zombie::findEnemy(Map *map)
+{
+	for (int i = -1; i <= 1; ++i)
+	{
+		for (int j = -1; j <= 1; ++j)
+		{
+			if (map->isValidCell(x() + i, y() + j))
+			{
+				if (map->isHero(x() + i, y() + j))
+				{
+					return Game::getInstance().getHero();
+				}
+				if (map->isPrincess(x() + i, y() + j))
+				{
+					return Game::getInstance().getPrincess();
+				}
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 void Zombie::move(Map *map)
 {
+	Character *enemy = findEnemy(map);
+
+	if (enemy != nullptr)
+	{
+		try
+		{
+			enemy->recieveDamage(damage());
+		}
+		catch (exception &e)
+		{
+			if (e.what() == hero_death_message)
+			{
+				cout << e.what() << endl;
+				Game::getInstance().setGameState("exiting");
+			}
+			if (e.what() == princess_death_message)
+			{
+				cout << e.what() << endl;
+				Game::getInstance().setGameState("exiting");
+			}
+
+			cout << e.what();
+		}
+
+		return;
+	}
+
 	_dir.first = (rand() % 2) * pow(-1, rand() % 3);
 	_dir.second = (rand() % 2) * pow(-1, rand() % 3);
 	int newX = x() + _dir.first;
