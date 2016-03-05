@@ -10,6 +10,9 @@ Knight::Knight(int x, int y, int hp) : Character(x, y, hp)
 void Knight::recieveDamage(int damage)
 {
 	_hp -= damage;
+	ostringstream convert;
+	convert << damage;
+	Game::getInstance().pushLogMessage("You recieved " + convert.str() + " damage\n");
 	if (_hp <= 0)
 	{
 		throw std::runtime_error(hero_death_message);

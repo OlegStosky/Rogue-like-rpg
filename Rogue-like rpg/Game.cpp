@@ -57,6 +57,11 @@ void Game::draw()
 {
 	_map->draw();
 	cout << _hero->hitPoints() << endl;
+	while (!_logMessages.empty())
+	{
+		cout << _logMessages.front();
+		_logMessages.pop();
+	}
 }
 
 void Game::gameLoop()

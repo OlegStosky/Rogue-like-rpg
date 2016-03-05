@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <map>
 #include "Character.h"
 #include "Const.h"

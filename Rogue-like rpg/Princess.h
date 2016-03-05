@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+#include <string>
 #include "Character.h"
 #include "Const.h"
 

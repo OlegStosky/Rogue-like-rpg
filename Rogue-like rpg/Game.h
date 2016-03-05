@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <queue>
 #include "Map.h"
 #include "Character.h"
 #include "Knight.h"
@@ -30,6 +31,7 @@ public:
 
 	void nextMove();
 	void heroMove();
+	inline void pushLogMessage(std::string message){ _logMessages.push(message); }
 
 	Character* findMonster(int x, int y);
 	void deleteMonster(Character *target);
@@ -45,4 +47,5 @@ private:
 	Knight *_hero;
 	Princess *_princess;
 	Map *_map;
+	std::queue<std::string> _logMessages;
 };

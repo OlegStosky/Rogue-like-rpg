@@ -3,6 +3,22 @@
 
 using namespace std;
 
+void Zombie::recieveDamage(int damage)
+{
+	_hp -= damage;
+	ostringstream convert;
+	convert << damage;
+	Game::getInstance().pushLogMessage("Zombie recieved " + convert.str() + " damage.\n");
+	convert.str("");
+	convert.clear();
+	convert << _hp;
+	Game::getInstance().pushLogMessage("Zombie has " + convert.str() + " hp left.\n");
+	if (_hp <= 0)
+	{
+		Game::getInstance().pushLogMessage("Zombie died.\n");
+	}
+}
+
 Character* Zombie::findEnemy(Map *map)
 {
 	for (int i = -1; i <= 1; ++i)
