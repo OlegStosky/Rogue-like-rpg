@@ -58,15 +58,20 @@ bool Map::isValidCell(int x, int y)
 
 bool Map::isPrincess(int x, int y)
 {
-	return _map[x][y] == 'P';
+	return _map[y][x] == 'P';
 }
 
 bool Map::isStone(int x, int y)
 {
-	return _map[x][y] == '#';
+	return _map[y][x] == '#';
 }
 
 bool Map::isZombie(int x, int y)
 {
-	return _map[x][y] == 'Z';
+	return _map[y][x] == 'Z';
+}
+
+bool Map::isHero(int x, int y)
+{
+	return _map[y][x] == 'H';
 }

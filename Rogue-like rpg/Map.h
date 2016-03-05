@@ -18,6 +18,7 @@ public:
 	bool isPrincess(int x, int y);
 	bool isZombie(int x, int y);
 	bool isStone(int x, int y);
+	bool isHero(int x, int y);
 	void move(int x, int y, int newX, int newY);
 
 private:

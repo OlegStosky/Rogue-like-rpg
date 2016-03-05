@@ -20,12 +20,17 @@ public:
 	static Game& getInstance();
 
 	void setGameState(std::string state); //todo
+	inline Character* getHero(){ return _hero; }
+	inline Character* getPrincess(){ return _princess; }
+
 	void start();
 	void draw();
 	void gameLoop();
 	bool isExiting();
+
 	void nextMove();
 	void heroMove();
+
 	Character* findMonster(int x, int y);
 	void deleteMonster(Character *target);
 

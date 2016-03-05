@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "Character.h"
 
 class Zombie : public Character
@@ -11,6 +12,6 @@ public:
 	inline char symbol() override { return 'z'; }
 	inline int damage() const override { return zombie_damage; }
 
-	void move();
+	void move(Map *map) override;
 	void recieveDamage();
 };

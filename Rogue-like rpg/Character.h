@@ -2,6 +2,8 @@
 
 #include "Map.h"
 
+using Direction = std::pair < int, int > ;
+
 class Character
 {
 public:
@@ -13,17 +15,21 @@ public:
 		}
 
 	virtual char symbol() = 0 {};
-	virtual void move(Map *map) {};
-	inline int x() const { return _x; }
-	void setX(int x){ _x = x; }
-	void setY(int y){ _y = y; }
-	inline int y() const { return _y; }
 	inline int hitPoints() const { return _hp; }
 	virtual int damage() const { return 10; };
+	inline int x() const { return _x; }
+	inline int y() const { return _y; }
+
+	void setX(int x){ _x = x; }
+	void setY(int y){ _y = y; }
 	
 	virtual void recieveDamage(int damage) {};
+	virtual void move(Map *map) {};
+	
+	inline bool isDead(){ return (_hp <= 0 ? true : false); }
 
 protected:
 	int _x, _y;
 	int _hp;
+	Direction _dir = std::make_pair(0, 0);
 };

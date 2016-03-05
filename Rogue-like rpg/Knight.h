@@ -6,9 +6,6 @@
 #include "Character.h"
 #include "Const.h"
 
-
-using Direction = std::pair<int, int>;
-
 class Knight : public Character
 {
 public:
@@ -23,7 +20,4 @@ public:
 	void recieveDamage(int damage);
 
 	void move(Map *map);
-
-private:
-	Direction _dir = std::make_pair(0, 0);
 };
