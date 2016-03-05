@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "Character.h"
+#include "Const.h"
 
 class Zombie : public Character
 {
@@ -13,5 +14,4 @@ public:
 	inline int damage() const override { return zombie_damage; }
 
 	void move(Map *map) override;
-	void recieveDamage();
 };

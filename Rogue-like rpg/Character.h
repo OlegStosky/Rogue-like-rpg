@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Map.h"
+#include "Const.h"
 
 using Direction = std::pair < int, int > ;
 
@@ -23,7 +24,7 @@ public:
 	void setX(int x){ _x = x; }
 	void setY(int y){ _y = y; }
 	
-	virtual void recieveDamage(int damage) {};
+	virtual void recieveDamage(int damage) { _hp -= damage; }
 	virtual void move(Map *map) {};
 	
 	inline bool isDead(){ return (_hp <= 0 ? true : false); }

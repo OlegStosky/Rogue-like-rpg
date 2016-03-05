@@ -27,15 +27,6 @@ void Knight::setDirection(std::string dir)
 	}
 }
 
-void Knight::recieveDamage(int damage)
-{
-	_hp -= damage;
-	if (_hp <= 0)
-	{
-		throw exception("Hero is dead");
-	}
-}
-
 void Knight::move(Map *map)
 {
 	string curMove;
@@ -56,10 +47,10 @@ void Knight::move(Map *map)
 			Character *zombie = Game::getInstance().findMonster(newX, newY);
 			if (zombie == nullptr)
 			{
-				throw std::runtime_error("Coudn`t find zombie");
+				throw std::runtime_error(null_zombie_message);
 			}
 			zombie->recieveDamage(damage());
-			if (zombie->hitPoints() <= 0)
+			if (zombie->isDead())
 			{
 				try
 				{

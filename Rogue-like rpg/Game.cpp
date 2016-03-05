@@ -72,10 +72,29 @@ bool Game::isExiting()
 
 void Game::nextMove()
 {
-	_hero->move(_map);
+	try
+	{
+		_hero->move(_map);
+		_princess->move(_map);
+	}
+	catch (exception &e)
+	{
+		{
+			cout << e.what();
+			return;
+		}
+	}
 	for (auto monster : _monsters)
 	{
-		monster->move(_map);
+		try
+		{
+			monster->move(_map);
+		}
+		catch (exception &e)
+		{
+			cout << e.what();
+			return;
+		}
 	}
 }
 
@@ -95,7 +114,7 @@ void Game::deleteMonster(Character *target)
 	auto it = find(_monsters.begin(), _monsters.end(), target);
 	if (it == _monsters.end())
 	{
-		throw std::runtime_error("Trying to delete non existing monster");
+		throw std::runtime_error(delete_error_message);
 	}
 	_monsters.erase(it);
 }

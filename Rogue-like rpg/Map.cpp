@@ -50,6 +50,11 @@ void Map::move(int y, int x, int newY, int newX)
 	}
 }
 
+void Map::clearCell(int y, int x)
+{
+	_map[x][y] = '.';
+}
+
 bool Map::isValidCell(int x, int y)
 {
 	return (x <= width) && (x >= 0) && 

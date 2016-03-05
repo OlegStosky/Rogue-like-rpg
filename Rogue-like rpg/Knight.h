@@ -16,8 +16,5 @@ public:
 	const Direction& direction(){ return _dir; }
 
 	void setDirection(std::string dir);
-	
-	void recieveDamage(int damage);
-
 	void move(Map *map);
 };

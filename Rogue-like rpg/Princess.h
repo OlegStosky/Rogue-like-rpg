@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Character.h"
+#include "Const.h"
 
 class Princess : public Character
 {
@@ -9,6 +10,8 @@ public:
 		Character(x, y, hp) {}
 
 	char symbol() override { return 'P'; }
-	void move(Map *map) override {};
 	int damage() const override { return princess_damage; }
+	
+	Character* findMonster(Map *map) const;
+	void move(Map *map) override;
 };
