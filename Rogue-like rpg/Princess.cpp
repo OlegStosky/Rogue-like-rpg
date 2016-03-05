@@ -25,7 +25,7 @@ void Princess::move(Map *map)
 	Character* monster = findMonster(map);
 	if (monster == nullptr)
 	{
-		throw std::runtime_error(null_zombie_message);
+		return;
 	}
 	monster->recieveDamage(damage());
 	if (monster->isDead())

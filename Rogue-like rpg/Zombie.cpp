@@ -17,7 +17,8 @@ void Zombie::move(Map *map)
 			Game::getInstance().getPrincess()->recieveDamage(damage());
 			if (Game::getInstance().getPrincess()->isDead())
 			{
-				throw std::runtime_error(princess_death_message);
+				cout << princess_death_message;
+				Game::getInstance().setGameState("exiting");
 			}
 		}
 
@@ -36,7 +37,8 @@ void Zombie::move(Map *map)
 			Game::getInstance().getHero()->recieveDamage(damage());
 			if (Game::getInstance().getHero()->isDead())
 			{
-				throw std::runtime_error(hero_death_message);
+				cout << hero_death_message;
+				Game::getInstance().setGameState("exiting");
 			}
 		}
 
