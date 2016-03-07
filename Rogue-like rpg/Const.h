@@ -3,6 +3,7 @@
 #include <string>
 
 using Direction = std::pair<int, int>;
+using PairII = std::pair<int, int>;
 
 const int inf = INT_MAX;
 const int g_distance = 10;

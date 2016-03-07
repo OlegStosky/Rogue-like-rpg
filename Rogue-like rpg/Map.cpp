@@ -69,64 +69,44 @@ void Map::init(int x, int y)
 	}
 }
 
-void Map::traverse(Heap &heap, vector< pair<int, int> > &wasVisited, Point cur)
+PairII getNextPair(int cnt)
 {
-	int x = cur._x;
-	int y = cur._y;
+
+	if (cnt < 2)
+	{
+		return make_pair(pow(-1, cnt), 0); //this will return (-1, 0), (1, 0)
+	}
+	else
+	{
+		return make_pair(0, pow(-1, cnt % 2));
+	}
+}
+
+void Map::traverse(Heap &heap, vector< pair<int, int> > &wasVisited, Point current)
+{
+	int x = current._x;
+	int y = current._y;
 	wasVisited.push_back(make_pair(x, y));
 
-	for (int i = -1; i <= 1; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		if (i == 0)
-			continue;
-		/*if (isEndPoint(x + i, y))
+		PairII cur = getNextPair(i); // go through all neighbour cells
+		if (isValidCell(x + cur.first, y + cur.second))
 		{
-			if (!heap.empty())
-			{
-				Point nextPoint = heap.top();
-				heap.pop();
-				traverse(heap, wasVisited, nextPoint);
-			}
-			return;
-		}*/
-		if (isValidCell(x + i, y))
-		{
-			if (!isStone(x + i, y))
+			if (!isStone(x + cur.first, y + cur.second))
 			{
 				//if we havent traversed from this cell
-				if (find(wasVisited.begin(), wasVisited.end(), (make_pair(x + i, y))) == wasVisited.end())
+				if (find(wasVisited.begin(), wasVisited.end(),
+					(make_pair(x + cur.first, y + cur.second))) == wasVisited.end())
 				{
-					// If we can improve path to current cell
-					if ((_map[y][x]._g + g_distance) < _map[y][x + i]._g)
+					if ((_map[y][x]._g + g_distance) < _map[y + cur.second][x + cur.first]._g)
 					{
-						_map[y][x + i]._parentX = x;
-						_map[y][x + i]._parentY = y;
-						_map[y][x + i]._g = _map[y][x]._g + g_distance;
-						_map[y][x + i]._f = _map[y][x + i]._g + _map[y][x + i]._h;
-						heap.push(_map[y][x + i]);
-					}
-				}
-			}
-		}
-	}
-
-	for (int i = -1; i <= 1; ++i)
-	{
-		if (i == 0)
-			continue;
-		if (isValidCell(x, y + i))
-		{
-			if (!isStone(x, y + i))
-			{
-				if (find(wasVisited.begin(), wasVisited.end(), (make_pair(x + i, y))) == wasVisited.end())
-				{
-					if ((_map[y][x]._g + g_distance) < _map[y + i][x]._g)
-					{
-						_map[y + i][x]._parentX = x;
-						_map[y + i][x]._parentY = y;
-						_map[y + i][x]._g = _map[y][x]._g + g_distance;
-						_map[y + i][x]._f = _map[y + i][x]._g + _map[y + i][x]._h;
-						heap.push(_map[y + i][x]);
+						_map[y + cur.second][x + cur.first]._parentX = x;
+						_map[y + cur.second][x + cur.first]._parentY = y;
+						_map[y + cur.second][x + cur.first]._g = _map[y][x]._g + g_distance;
+						_map[y + cur.second][x + cur.first]._f = _map[y + cur.second][x + cur.first]._g +
+							_map[y + cur.second][x + cur.first]._h;
+						heap.push(_map[y + cur.second][x + cur.first]);
 					}
 				}
 			}

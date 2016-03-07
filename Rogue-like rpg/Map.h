@@ -10,7 +10,7 @@
 #include "Const.h"
 #include "Point.h"
 
-/* Comparator for MinHeap */
+// Comparator for MinHeap 
 struct PointCompare
 {
 	bool operator()(Point a, Point b) const { return a.f() > b.f(); }
@@ -34,15 +34,16 @@ public:
 	bool isZombie(int x, int y);
 	bool isStone(int x, int y);
 	bool isHero(int x, int y);
-	bool isEndPoint(int x, int y);
 
 private:
 	Point _map[height][width];
 
-	void init(int x, int y);
+	//a* methods
+	void init(int x, int y); 
 	void traverse(Heap &heap,
-		std::vector< std::pair<int, int> > &wasVisited,
-		Point cur);
+		std::vector<PairII> &wasVisited,
+		Point current);
+	bool isEndPoint(int x, int y);
 
 	friend class Game;
 };
