@@ -27,7 +27,7 @@ public:
 	void clearCell(int x, int y);
 	
 	void calcShortestDistances(int x, int y);
-	std::pair<int,int> getBestMove(int x, int y);
+	PairII getBestMove(int x, int y);
 
 	bool isValidCell(int x, int y);
 	bool isPrincess(int x, int y);

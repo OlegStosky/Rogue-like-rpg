@@ -25,10 +25,10 @@ public:
 	inline char symb(){ return _symb; }
 
 private:
-	int _h, _g, _f;
+	int _h, _g, _f; //a* metrics
 	char _symb;
 	int _x, _y;
-	int _parentX, _parentY;
+	int _parentX, _parentY; //coordinates of the next cell, lying on the shortest path to hero
 
 	friend class Map;
 };

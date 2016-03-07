@@ -56,6 +56,22 @@ void Map::clearCell(int x, int y)
 	_map[y][x]._symb = '.';
 }
 
+
+
+//Calculates the shortest distances from all points to hero using a* algorithm
+//Starting from x, y
+void Map::calcShortestDistances(int x, int y)
+{
+	int heroX = Game::getInstance().getHero()->x();
+	int heroY = Game::getInstance().getHero()->y();
+	init(x, y);
+	Heap heap;
+	vector<pair<int, int>> wasVisited;
+	_map[heroY][heroX]._g = 0; //cost of moving from starting point is zero
+	traverse(heap, wasVisited, _map[heroY][heroX]);
+}
+
+//init all the points for a*
 void Map::init(int x, int y)
 {
 	for (int i = 0; i < height; ++i)
@@ -69,6 +85,7 @@ void Map::init(int x, int y)
 	}
 }
 
+//helper function for going through neighbor cells
 PairII getNextPair(int cnt)
 {
 
@@ -78,7 +95,7 @@ PairII getNextPair(int cnt)
 	}
 	else
 	{
-		return make_pair(0, pow(-1, cnt % 2));
+		return make_pair(0, pow(-1, cnt % 2)); //this will return (0, -1), (0, 1)
 	}
 }
 
@@ -121,23 +138,11 @@ void Map::traverse(Heap &heap, vector< pair<int, int> > &wasVisited, Point curre
 	}
 }
 
-//Calculates the shortest distances from all points to hero using a* algorithm
-//Starting from x, y
-void Map::calcShortestDistances(int x, int y)
-{
-	int heroX = Game::getInstance().getHero()->x();
-	int heroY = Game::getInstance().getHero()->y();
-	init(x, y);
-	Heap heap;
-	vector<pair<int, int>> wasVisited;
-	_map[heroY][heroX]._g = 0; //cost of moving from starting point is zero
-	traverse(heap, wasVisited, _map[heroY][heroX]);
-}
-
-pair<int, int> Map::getBestMove(int x, int y)
+PairII Map::getBestMove(int x, int y)
 {
 	return make_pair(_map[y][x]._parentX, _map[y][x]._parentY);
 }
+
 
 bool Map::isValidCell(int x, int y)
 {
