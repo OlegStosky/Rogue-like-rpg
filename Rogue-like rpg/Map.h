@@ -5,9 +5,18 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <queue>
+#include <algorithm>
 #include "Const.h"
+#include "Point.h"
 
-using Direction = std::pair<int, int>;
+/* Comparator for MinHeap */
+struct PointCompare
+{
+	bool operator()(Point a, Point b) const { return a.f() > b.f(); }
+};
+
+using Heap = std::priority_queue<Point, std::vector<Point>, PointCompare>;
 
 class Map
 {
@@ -16,15 +25,24 @@ public:
 	void draw();
 	void move(int x, int y, int newX, int newY);
 	void clearCell(int x, int y);
+	
+	void calcShortestDistances(int x, int y);
+	std::pair<int,int> getBestMove(int x, int y);
 
 	bool isValidCell(int x, int y);
 	bool isPrincess(int x, int y);
 	bool isZombie(int x, int y);
 	bool isStone(int x, int y);
 	bool isHero(int x, int y);
+	bool isEndPoint(int x, int y);
 
 private:
-	char _map[width][height];
+	Point _map[height][width];
+
+	void init(int x, int y);
+	void traverse(Heap &heap,
+		std::vector< std::pair<int, int> > &wasVisited,
+		Point cur);
 
 	friend class Game;
 };

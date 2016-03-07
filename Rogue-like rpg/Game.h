@@ -11,8 +11,6 @@
 #include "Zombie.h"
 #include "Princess.h"
 
-using Direction = std::pair<int, int>;
-
 class Game
 {
 public:

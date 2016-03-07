@@ -12,12 +12,20 @@ Game::Game()
 {
 	_map = new Map;
 
-	_map->readInp("map.txt");
+	try
+	{
+		_map->readInp("map.txt");
+	}
+	catch (exception &e)
+	{
+		cout << e.what() << endl;
+		return;
+	}
 	for (int i = 0; i < height; ++i)
 	{
 		for (int j = 0; j < width; ++j)
 		{
-			switch (_map->_map[i][j])
+			switch (_map->_map[i][j].symb())
 			{
 			case 'H':
 				_hero = new Knight(j, i, hero_hp);
@@ -94,6 +102,7 @@ void Game::nextMove()
 	{
 		try
 		{
+			_map->calcShortestDistances(end_point_x, end_point_y);
 			monster->move(_map);
 		}
 		catch (exception &e)

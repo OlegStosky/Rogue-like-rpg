@@ -2,8 +2,15 @@
 
 #include <string>
 
-const int width			= 10;
-const int height		= 10;
+using Direction = std::pair<int, int>;
+
+const int inf = INT_MAX;
+const int g_distance = 10;
+const int end_point_x = 11;
+const int end_point_y = 11;
+
+const int width			= 12;
+const int height		= 12;
 
 const int hero_hp		= 100;
 const int zombie_hp		= 30;

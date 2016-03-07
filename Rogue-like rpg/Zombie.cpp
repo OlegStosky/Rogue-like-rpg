@@ -73,48 +73,21 @@ void Zombie::move(Map *map)
 		return;
 	}
 
-	_dir.first = (rand() % 2) * pow(-1, rand() % 3);
-	_dir.second = (rand() % 2) * pow(-1, rand() % 3);
-	int newX = x() + _dir.first;
-	int newY = y() + _dir.second;
-
-	if (map->isValidCell(newX, newY))
+	pair<int, int> move = map->getBestMove(x(), y());
+	if (map->isValidCell(move.first, move.second))
 	{
-		if (map->isPrincess(newX, newY))
-		{
-			Game::getInstance().getPrincess()->recieveDamage(damage());
-			if (Game::getInstance().getPrincess()->isDead())
-			{
-				cout << princess_death_message;
-				Game::getInstance().setGameState("exiting");
-			}
-
-			return;
-		}
-
-		if (map->isStone(newX, newY))
+		if (map->isStone(move.first, move.second))
 		{
 			return;
 		}
 
-		if (map->isZombie(newX, newY))
+		if (map->isZombie(move.first, move.second))
 		{
 			return;
 		}
 
-		if (map->isHero(newX, newY))
-		{
-			Game::getInstance().getHero()->recieveDamage(damage());
-			if (Game::getInstance().getHero()->isDead())
-			{
-				cout << hero_death_message;
-				Game::getInstance().setGameState("exiting");
-			}
-			return;
-		}
-
-		map->move(x(), y(), newX, newY);
-		setX(newX);
-		setY(newY);
+		map->move(x(), y(), move.first, move.second);
+		setX(move.first);
+		setY(move.second);
 	}
 }
