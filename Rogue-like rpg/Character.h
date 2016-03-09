@@ -15,7 +15,7 @@ public:
 		{
 		}
 
-	virtual char symbol() = 0 {};
+	virtual char symbol() const = 0 {};
 	inline int hitPoints() const { return _hp; }
 	virtual int damage() const { return 10; };
 	inline int x() const { return _x; }

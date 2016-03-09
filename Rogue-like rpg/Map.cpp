@@ -66,7 +66,7 @@ void Map::calcShortestDistances(int x, int y)
 	int heroY = Game::getInstance().getHero()->y();
 	init(x, y);
 	Heap heap;
-	vector<pair<int, int>> wasVisited;
+	vector<PairII> wasVisited;
 	_map[heroY][heroX]._g = 0; //cost of moving from starting point is zero
 	traverse(heap, wasVisited, _map[heroY][heroX]);
 }
@@ -99,7 +99,7 @@ PairII getNextPair(int cnt)
 	}
 }
 
-void Map::traverse(Heap &heap, vector< pair<int, int> > &wasVisited, Point current)
+void Map::traverse(Heap &heap, vector<PairII> &wasVisited, Point current)
 {
 	int x = current._x;
 	int y = current._y;

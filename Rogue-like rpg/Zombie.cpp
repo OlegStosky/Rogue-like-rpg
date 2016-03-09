@@ -73,7 +73,7 @@ void Zombie::move(Map *map)
 		return;
 	}
 
-	pair<int, int> move = map->getBestMove(x(), y());
+	PairII move = map->getBestMove(x(), y());
 	if (map->isValidCell(move.first, move.second))
 	{
 		if (map->isStone(move.first, move.second))
