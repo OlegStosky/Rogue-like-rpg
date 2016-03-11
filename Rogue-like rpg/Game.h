@@ -21,8 +21,10 @@ public:
 	void setGameState(std::string state);
 	inline Character* getHero(){ return _hero; }
 	inline Character* getPrincess(){ return _princess; }
-
+	
+	void parseMap();
 	void start();
+	void printLog();
 	void draw();
 	void gameLoop();
 	bool isExiting();

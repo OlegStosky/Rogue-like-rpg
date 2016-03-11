@@ -15,12 +15,19 @@ Game::Game()
 	try
 	{
 		_map->readInp("map.txt");
+		parseMap();
 	}
 	catch (exception &e)
 	{
 		cout << e.what() << endl;
 		return;
 	}
+
+	_gameState = GameState::playing;
+}
+
+void Game::parseMap()
+{
 	for (int i = 0; i < height; ++i)
 	{
 		for (int j = 0; j < width; ++j)
@@ -40,7 +47,8 @@ Game::Game()
 		}
 	}
 
-	_gameState = GameState::playing;
+	if (_hero == nullptr || _princess == nullptr)
+		throw std::runtime_error("Map is invalid");
 }
 
 void Game::setGameState(string state)
@@ -61,16 +69,21 @@ void Game::start()
 	}
 }
 
-void Game::draw()
+void Game::printLog()
 {
-	_map->draw();
-	cout << "Your hp : " << _hero->hitPoints() << endl;
-	cout << "Princess hp : " << _princess->hitPoints() << endl;
 	while (!_logMessages.empty())
 	{
 		cout << _logMessages.front();
 		_logMessages.pop();
 	}
+}
+
+void Game::draw()
+{
+	_map->draw();
+	cout << "Your hp : " << _hero->hitPoints() << endl;
+	cout << "Princess hp : " << _princess->hitPoints() << endl;
+	printLog();
 }
 
 void Game::gameLoop()
