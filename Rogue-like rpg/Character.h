@@ -14,8 +14,9 @@ public:
 		_hp(hp)
 		{
 		}
+	virtual ~Character(){}
 
-	virtual char symbol() const = 0 {};
+	virtual char symbol() const { return 'C'; }
 	inline int hitPoints() const { return _hp; }
 	virtual int damage() const { return 10; };
 	inline int x() const { return _x; }

@@ -11,7 +11,7 @@ public:
 	Princess(int x, int y, int hp) :
 		Character(x, y, hp) {}
 
-	char symbol() override { return 'P'; }
+	char symbol() const override { return 'P'; }
 	int damage() const override { return princess_damage; }
 	
 	Character* findMonster(Map *map) const;
