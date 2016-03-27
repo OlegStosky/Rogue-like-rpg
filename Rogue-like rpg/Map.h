@@ -27,10 +27,10 @@ public:
 	void move(Vec2i from, Vec2i to);
 	void clearCell(Vec2i cell);
 	
-	void calcShortestDistances(Vec2i from);
-	Vec2i getBestMove(Vec2i from);
+	Vec2i calcShortestPath(Vec2i from, Vec2i to);
 
 	bool isValidCell(Vec2i cell);
+	bool isEmptyCell(Vec2i cell);
 	bool isPrincess(Vec2i princess);
 	bool isZombie(Vec2i zombie);
 	bool isStone(Vec2i stone);
@@ -43,8 +43,7 @@ private:
 	void init(Vec2i from); 
 	void traverse(Heap &heap,
 		std::vector<Vec2i> &wasVisited,
-		Point current);
-	bool isEndPoint(Vec2i point);
+		Point current, Vec2i dest);
 
 	friend class Game;
 };

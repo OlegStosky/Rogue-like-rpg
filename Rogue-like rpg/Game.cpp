@@ -115,7 +115,6 @@ void Game::nextMove()
 	{
 		try
 		{
-			_map->calcShortestDistances(Vec2i(end_point_x, end_point_y));
 			monster->move(_map);
 		}
 		catch (exception &e)

@@ -4,8 +4,6 @@
 #include "Const.h"
 #include "Vec2i.h"
 
-using Direction = std::pair < int, int > ;
-
 class Character
 {
 public:

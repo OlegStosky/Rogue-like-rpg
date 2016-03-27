@@ -57,18 +57,15 @@ void Map::clearCell(Vec2i cell)
 	_map[cell.y][cell.x]._symb = '.';
 }
 
-
-
-//Calculates the shortest distances from all points to hero using a* algorithm
-//Starting from x, y
-void Map::calcShortestDistances(Vec2i from)
+//Calculates shortest path between 2 points, using a* algorithm
+Vec2i Map::calcShortestPath(Vec2i from, Vec2i to)
 {
-	Vec2i heroCoordinates = Game::getInstance().getHero()->coordinates();
-	init(from);
+	init(to);
 	Heap heap;
 	vector<Vec2i> wasVisited;
-	_map[heroCoordinates.y][heroCoordinates.x]._g = 0; //cost of moving from starting point is zero
-	traverse(heap, wasVisited, _map[heroCoordinates.y][heroCoordinates.x]);
+	_map[from.y][from.x]._g = 0; //cost of moving from starting point is zero
+	traverse(heap, wasVisited, _map[from.y][from.x], to);
+	return Vec2i(_map[to.y][to.x]._parentX, _map[to.y][to.x]._parentY);
 }
 
 //init all the points for a*
@@ -99,9 +96,11 @@ Vec2i getNextPair(int cnt)
 	}
 }
 
-void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point current)
+void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point current, Vec2i dest)
 {
 	Vec2i curPoint = Vec2i(current.x(), current.y());
+	if (curPoint == dest)
+		return;
 	wasVisited.push_back(Vec2i(curPoint.x, curPoint.y));
 
 	for (int i = 0; i < 4; ++i)
@@ -110,7 +109,7 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point current)
 		Vec2i newCoord = curPoint + curDir;
 		if (isValidCell(newCoord))
 		{
-			if (!isStone(newCoord))
+			if (isEmptyCell(newCoord) || (isZombie(newCoord) && newCoord == dest))
 			{
 				//if we havent traversed from this cell
 				if (find(wasVisited.begin(), wasVisited.end(),
@@ -134,20 +133,19 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point current)
 	{
 		Point nextPoint = heap.top();
 		heap.pop();
-		traverse(heap, wasVisited, nextPoint);
+		traverse(heap, wasVisited, nextPoint, dest);
 	}
 }
-
-Vec2i Map::getBestMove(Vec2i from)
-{
-	return Vec2i(_map[from.y][from.x]._parentX, _map[from.y][from.x]._parentY);
-}
-
 
 bool Map::isValidCell(Vec2i cell)
 {
 	return (cell.x <= width - 1) && (cell.x >= 0) && 
 		(cell.y <= height - 1) && (cell.y >= 0);
+}
+
+bool Map::isEmptyCell(Vec2i cell)
+{
+	return _map[cell.y][cell.x].symb() == '.';
 }
 
 bool Map::isPrincess(Vec2i princess)
@@ -168,9 +166,4 @@ bool Map::isZombie(Vec2i zombie)
 bool Map::isHero(Vec2i hero)
 {
 	return _map[hero.y][hero.x]._symb == 'H';
-}
-
-bool Map::isEndPoint(Vec2i point)
-{
-	return point.x == end_point_x && point.y == end_point_y;
 }

@@ -69,7 +69,7 @@ void Zombie::move(Map *map)
 		return;
 	}
 
-	Vec2i newCoordinates = map->getBestMove(_coordinates);
+	Vec2i newCoordinates = map->calcShortestPath(Game::getInstance().getHero()->coordinates(), _coordinates);
 	if (map->isValidCell(newCoordinates))
 	{
 		if (map->isStone(newCoordinates))
