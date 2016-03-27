@@ -42,43 +42,43 @@ void Map::draw()
 	}
 }
 
-void Map::move(int x, int y, int newX, int newY)
+void Map::move(Vec2i from, Vec2i to)
 {
-	if (isValidCell(x, y) && isValidCell(newX, newY))
+	if (isValidCell(from) && isValidCell(to))
 	{
-		_map[newY][newX]._symb = _map[y][x]._symb;
-		_map[y][x]._symb = '.';
+		char tmp = _map[from.y][from.x].symb();
+		_map[from.y][from.x]._symb = _map[to.y][to.x]._symb;
+		_map[to.y][to.x]._symb = tmp;
 	}
 }
 
-void Map::clearCell(int x, int y)
+void Map::clearCell(Vec2i cell)
 {
-	_map[y][x]._symb = '.';
+	_map[cell.y][cell.x]._symb = '.';
 }
 
 
 
 //Calculates the shortest distances from all points to hero using a* algorithm
 //Starting from x, y
-void Map::calcShortestDistances(int x, int y)
+void Map::calcShortestDistances(Vec2i from)
 {
-	int heroX = Game::getInstance().getHero()->x();
-	int heroY = Game::getInstance().getHero()->y();
-	init(x, y);
+	Vec2i heroCoordinates = Game::getInstance().getHero()->coordinates();
+	init(from);
 	Heap heap;
-	vector<PairII> wasVisited;
-	_map[heroY][heroX]._g = 0; //cost of moving from starting point is zero
-	traverse(heap, wasVisited, _map[heroY][heroX]);
+	vector<Vec2i> wasVisited;
+	_map[heroCoordinates.y][heroCoordinates.x]._g = 0; //cost of moving from starting point is zero
+	traverse(heap, wasVisited, _map[heroCoordinates.y][heroCoordinates.x]);
 }
 
 //init all the points for a*
-void Map::init(int x, int y)
+void Map::init(Vec2i from)
 {
 	for (int i = 0; i < height; ++i)
 	{
 		for (int j = 0; j < width; ++j)
 		{
-			_map[i][j]._h = abs(x - j) + abs(y - i);
+			_map[i][j]._h = abs(from.x - j) + abs(from.y - i);
 			_map[i][j]._g = inf;
 			_map[i][j]._f = 0;
 		}
@@ -86,44 +86,44 @@ void Map::init(int x, int y)
 }
 
 //helper function for going through neighbor cells
-PairII getNextPair(int cnt)
+Vec2i getNextPair(int cnt)
 {
 
 	if (cnt < 2)
 	{
-		return make_pair(pow(-1, cnt), 0); //this will return (-1, 0), (1, 0)
+		return Vec2i(pow(-1, cnt), 0); //this will return (-1, 0), (1, 0)
 	}
 	else
 	{
-		return make_pair(0, pow(-1, cnt % 2)); //this will return (0, -1), (0, 1)
+		return Vec2i(0, pow(-1, cnt % 2)); //this will return (0, -1), (0, 1)
 	}
 }
 
-void Map::traverse(Heap &heap, vector<PairII> &wasVisited, Point current)
+void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point current)
 {
-	int x = current._x;
-	int y = current._y;
-	wasVisited.push_back(make_pair(x, y));
+	Vec2i curPoint = Vec2i(current.x(), current.y());
+	wasVisited.push_back(Vec2i(curPoint.x, curPoint.y));
 
 	for (int i = 0; i < 4; ++i)
 	{
-		PairII cur = getNextPair(i); // go through all neighbour cells
-		if (isValidCell(x + cur.first, y + cur.second))
+		Vec2i curDir = getNextPair(i); // go through all neighbour cells
+		Vec2i newCoord = curPoint + curDir;
+		if (isValidCell(newCoord))
 		{
-			if (!isStone(x + cur.first, y + cur.second))
+			if (!isStone(newCoord))
 			{
 				//if we havent traversed from this cell
 				if (find(wasVisited.begin(), wasVisited.end(),
-					(make_pair(x + cur.first, y + cur.second))) == wasVisited.end())
+					newCoord) == wasVisited.end())
 				{
-					if ((_map[y][x]._g + g_distance) < _map[y + cur.second][x + cur.first]._g)
+					if ((_map[curPoint.y][curPoint.x]._g + g_distance) < _map[newCoord.y][newCoord.x]._g)
 					{
-						_map[y + cur.second][x + cur.first]._parentX = x;
-						_map[y + cur.second][x + cur.first]._parentY = y;
-						_map[y + cur.second][x + cur.first]._g = _map[y][x]._g + g_distance;
-						_map[y + cur.second][x + cur.first]._f = _map[y + cur.second][x + cur.first]._g +
-							_map[y + cur.second][x + cur.first]._h;
-						heap.push(_map[y + cur.second][x + cur.first]);
+						_map[newCoord.y][newCoord.x]._parentX = curPoint.x;
+						_map[newCoord.y][newCoord.x]._parentY = curPoint.y;
+						_map[newCoord.y][newCoord.x]._g = _map[curPoint.y][curPoint.x]._g + g_distance;
+						_map[newCoord.y][newCoord.x]._f = _map[newCoord.y][newCoord.x]._g +
+							_map[newCoord.y][newCoord.x]._h;
+						heap.push(_map[newCoord.y][newCoord.x]);
 					}
 				}
 			}
@@ -138,39 +138,39 @@ void Map::traverse(Heap &heap, vector<PairII> &wasVisited, Point current)
 	}
 }
 
-PairII Map::getBestMove(int x, int y)
+Vec2i Map::getBestMove(Vec2i from)
 {
-	return make_pair(_map[y][x]._parentX, _map[y][x]._parentY);
+	return Vec2i(_map[from.y][from.x]._parentX, _map[from.y][from.x]._parentY);
 }
 
 
-bool Map::isValidCell(int x, int y)
+bool Map::isValidCell(Vec2i cell)
 {
-	return (x <= width - 1) && (x >= 0) && 
-		(y <= height - 1) && (y >= 0);
+	return (cell.x <= width - 1) && (cell.x >= 0) && 
+		(cell.y <= height - 1) && (cell.y >= 0);
 }
 
-bool Map::isPrincess(int x, int y)
+bool Map::isPrincess(Vec2i princess)
 {
-	return _map[y][x]._symb == 'P';
+	return _map[princess.y][princess.x]._symb == 'P';
 }
 
-bool Map::isStone(int x, int y)
+bool Map::isStone(Vec2i stone)
 {
-	return _map[y][x]._symb == '#';
+	return _map[stone.y][stone.x]._symb == '#';
 }
 
-bool Map::isZombie(int x, int y)
+bool Map::isZombie(Vec2i zombie)
 {
-	return _map[y][x]._symb == 'Z';
+	return _map[zombie.y][zombie.x]._symb == 'Z';
 }
 
-bool Map::isHero(int x, int y)
+bool Map::isHero(Vec2i hero)
 {
-	return _map[y][x]._symb == 'H';
+	return _map[hero.y][hero.x]._symb == 'H';
 }
 
-bool Map::isEndPoint(int x, int y)
+bool Map::isEndPoint(Vec2i point)
 {
-	return x == end_point_x && y == end_point_y;
+	return point.x == end_point_x && point.y == end_point_y;
 }

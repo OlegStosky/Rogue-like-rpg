@@ -33,7 +33,7 @@ public:
 	void heroMove();
 	inline void pushLogMessage(std::string message){ _logMessages.push(message); }
 
-	Character* findMonster(int x, int y);
+	Character* findMonster(Vec2i coordinates);
 	void deleteMonster(Character *target);
 
 	Game(const Game& rhs) = delete;

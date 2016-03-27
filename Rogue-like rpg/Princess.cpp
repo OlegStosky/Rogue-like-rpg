@@ -7,9 +7,7 @@ void Princess::recieveDamage(int damage)
 {
 	_hp -= damage;
 
-	ostringstream  convert;
-	convert << damage;
-	Game::getInstance().pushLogMessage("Princess recieved " + convert.str() + " damage\n");
+	Game::getInstance().pushLogMessage("Princess recieved " + to_string(damage) + " damage\n");
 
 	if (_hp <= 0)
 	{
@@ -17,17 +15,18 @@ void Princess::recieveDamage(int damage)
 	}
 }
 
-Character* Princess::findMonster(Map *map) const
+Character* Princess::findMonster(Map *map)
 {
 	for (int i = -1; i <= 1; ++i)
 	{
 		for (int j = -1; j <= 1; ++j)
 		{
-			if (map->isValidCell(x() + i, y() + j))
+			_direction = Vec2i(i, j);
+			if (map->isValidCell(newCoordinates()))
 			{
-				if (map->isZombie(x() + i, y() + j))
+				if (map->isZombie(newCoordinates()))
 				{
-					return Game::getInstance().findMonster(x() + i, y() + j);
+					return Game::getInstance().findMonster(newCoordinates());
 				}
 			}
 		}
@@ -48,6 +47,6 @@ void Princess::move(Map *map)
 	if (monster->isDead())
 	{
 		Game::getInstance().deleteMonster(monster);
-		map->clearCell(monster->x(), monster->y());
+		map->clearCell(monster->coordinates());
 	}
 }

@@ -7,13 +7,8 @@ void Zombie::recieveDamage(int damage)
 {
 	_hp -= damage;
 
-	ostringstream convert;
-	convert << damage;
-	Game::getInstance().pushLogMessage("Zombie recieved " + convert.str() + " damage.\n");
-	convert.str("");
-	convert.clear();
-	convert << _hp;
-	Game::getInstance().pushLogMessage("Zombie has " + convert.str() + " hp left.\n");
+	Game::getInstance().pushLogMessage("Zombie recieved " + to_string(damage) + " damage.\n");
+	Game::getInstance().pushLogMessage("Zombie has " + to_string(_hp) + " hp left.\n");
 
 	if (_hp <= 0)
 	{
@@ -27,13 +22,14 @@ Character* Zombie::findEnemy(Map *map)
 	{
 		for (int j = -1; j <= 1; ++j)
 		{
-			if (map->isValidCell(x() + i, y() + j))
+			_direction = Vec2i(i, j);
+			if (map->isValidCell(newCoordinates()))
 			{
-				if (map->isHero(x() + i, y() + j))
+				if (map->isHero(newCoordinates()))
 				{
 					return Game::getInstance().getHero();
 				}
-				if (map->isPrincess(x() + i, y() + j))
+				if (map->isPrincess(newCoordinates()))
 				{
 					return Game::getInstance().getPrincess();
 				}
@@ -73,21 +69,20 @@ void Zombie::move(Map *map)
 		return;
 	}
 
-	PairII move = map->getBestMove(x(), y());
-	if (map->isValidCell(move.first, move.second))
+	Vec2i newCoordinates = map->getBestMove(_coordinates);
+	if (map->isValidCell(newCoordinates))
 	{
-		if (map->isStone(move.first, move.second))
+		if (map->isStone(newCoordinates))
 		{
 			return;
 		}
 
-		if (map->isZombie(move.first, move.second))
+		if (map->isZombie(newCoordinates))
 		{
 			return;
 		}
 
-		map->move(x(), y(), move.first, move.second);
-		setX(move.first);
-		setY(move.second);
+		map->move(_coordinates, newCoordinates);
+		setCoordinates(newCoordinates);
 	}
 }

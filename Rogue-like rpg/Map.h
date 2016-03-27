@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "Const.h"
 #include "Point.h"
+#include "Vec2i.h"
 
 // Comparator for MinHeap 
 struct PointCompare
@@ -23,27 +24,27 @@ class Map
 public:
 	void readInp(std::string fileName);
 	void draw();
-	void move(int x, int y, int newX, int newY);
-	void clearCell(int x, int y);
+	void move(Vec2i from, Vec2i to);
+	void clearCell(Vec2i cell);
 	
-	void calcShortestDistances(int x, int y);
-	PairII getBestMove(int x, int y);
+	void calcShortestDistances(Vec2i from);
+	Vec2i getBestMove(Vec2i from);
 
-	bool isValidCell(int x, int y);
-	bool isPrincess(int x, int y);
-	bool isZombie(int x, int y);
-	bool isStone(int x, int y);
-	bool isHero(int x, int y);
+	bool isValidCell(Vec2i cell);
+	bool isPrincess(Vec2i princess);
+	bool isZombie(Vec2i zombie);
+	bool isStone(Vec2i stone);
+	bool isHero(Vec2i hero);
 
 private:
 	Point _map[height][width];
 
 	//a* methods
-	void init(int x, int y); 
+	void init(Vec2i from); 
 	void traverse(Heap &heap,
-		std::vector<PairII> &wasVisited,
+		std::vector<Vec2i> &wasVisited,
 		Point current);
-	bool isEndPoint(int x, int y);
+	bool isEndPoint(Vec2i point);
 
 	friend class Game;
 };

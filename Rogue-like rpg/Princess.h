@@ -14,7 +14,7 @@ public:
 	char symbol() const override { return 'P'; }
 	int damage() const override { return princess_damage; }
 	
-	Character* findMonster(Map *map) const;
+	Character* findMonster(Map *map);
 	void move(Map *map) override;
 	void recieveDamage(int damage) override;
 };

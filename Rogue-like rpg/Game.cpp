@@ -115,7 +115,7 @@ void Game::nextMove()
 	{
 		try
 		{
-			_map->calcShortestDistances(end_point_x, end_point_y);
+			_map->calcShortestDistances(Vec2i(end_point_x, end_point_y));
 			monster->move(_map);
 		}
 		catch (exception &e)
@@ -126,11 +126,11 @@ void Game::nextMove()
 	}
 }
 
-Character* Game::findMonster(int x, int y)
+Character* Game::findMonster(Vec2i coordinates)
 {
 	for (auto monster : _monsters)
 	{
-		if (monster->x() == x && monster->y() == y)
+		if (monster->coordinates() == coordinates)
 			return monster;
 	}
 

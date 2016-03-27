@@ -11,9 +11,7 @@ void Knight::recieveDamage(int damage)
 {
 	_hp -= damage;
 
-	ostringstream convert;
-	convert << damage;
-	Game::getInstance().pushLogMessage("You recieved " + convert.str() + " damage\n");
+	Game::getInstance().pushLogMessage("You recieved " + to_string(damage) + " damage\n");
 
 	if (_hp <= 0)
 	{
@@ -25,19 +23,19 @@ void Knight::setDirection(std::string dir)
 {
 	if (dir == "down")
 	{
-		_dir = make_pair(0, 1);
+		_direction = Vec2i(0, 1);
 	}
 	if (dir == "up")
 	{
-		_dir = make_pair(0, -1);
+		_direction = Vec2i(0, -1);
 	}
 	if (dir == "left")
 	{
-		_dir = make_pair(-1, 0);
+		_direction = Vec2i(-1, 0);
 	}
 	if (dir == "right")
 	{
-		_dir = make_pair(1, 0);
+		_direction = Vec2i(1, 0);
 	}
 }
 
@@ -47,22 +45,21 @@ void Knight::move(Map *map)
 	cin >> curMove;
 	setDirection(curMove);
 	
-	int newX = x() + _dir.first;
-	int newY = y() + _dir.second;
-	if ((x() == newX) && (y() == newY))
+	Vec2i newCoordinates = _coordinates + _direction;
+	if (newCoordinates == _coordinates)
 		return;
 
-	if (map->isValidCell(newX, newY))
+	if (map->isValidCell(newCoordinates))
 	{
-		if (map->isPrincess(newX, newY))
+		if (map->isPrincess(newCoordinates))
 		{
 			cout << "You won!" << endl;
 			Game::getInstance().setGameState("exiting");
 		}
 
-		if (map->isZombie(newX, newY))
+		if (map->isZombie(newCoordinates))
 		{
-			Character *zombie = Game::getInstance().findMonster(newX, newY);
+			Character *zombie = Game::getInstance().findMonster(newCoordinates);
 			if (zombie == nullptr)
 			{
 				throw std::runtime_error(null_zombie_message);
@@ -74,7 +71,7 @@ void Knight::move(Map *map)
 				try
 				{
 					Game::getInstance().deleteMonster(zombie);
-					map->clearCell(newX, newY);
+					map->clearCell(newCoordinates);
 				}
 				catch (exception &e)
 				{
@@ -86,14 +83,13 @@ void Knight::move(Map *map)
 			return;
 		}
 
-		if (map->isStone(newX, newY))
+		if (map->isStone(newCoordinates))
 		{
 			return;
 		}
 
-		map->move(x(), y(), newX, newY);
-		setX(newX);
-		setY(newY);
+		map->move(_coordinates, newCoordinates);
+		setCoordinates(newCoordinates);
 	}
 }
 
