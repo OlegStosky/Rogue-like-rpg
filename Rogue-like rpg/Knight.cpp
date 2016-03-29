@@ -1,100 +1,53 @@
+#include <conio.h>
 #include "Game.h"
-#include "Knight.h"
+#include "Character.h"
+
 
 using namespace std;
 
-Knight::Knight(int x, int y, int hp) : Character(x, y, hp)
+Knight::Knight(Vec2i coords, int hp, char symb, int damage) : Character(coords, hp, symb, damage)
 {
+	_directions['s'] = Vec2i(0, 1);
+	_directions['w'] = Vec2i(0, -1);
+	_directions['a'] = Vec2i(-1, 0);
+	_directions['d'] = Vec2i(1, 0);
 }
 
 void Knight::recieveDamage(int damage)
 {
 	_hp -= damage;
 
-	Game::getInstance().pushLogMessage("You recieved " + to_string(damage) + " damage\n");
-
-	if (_hp <= 0)
-	{
-		throw std::runtime_error(hero_death_message);
-	}
+	Game::getInstance().pushLogMessage("You received " + to_string(damage) + " damage\n");
+	if (isDead())
+		Game::getInstance().setGameState(Game::GameState::exiting);
 }
 
-void Knight::setDirection(std::string dir)
+void Knight::setDirection(char dir)
 {
-	if (dir == "down")
-	{
-		_direction = Vec2i(0, 1);
-		return;
-	}
-	if (dir == "up")
-	{
-		_direction = Vec2i(0, -1);
-		return;
-	}
-	if (dir == "left")
-	{
-		_direction = Vec2i(-1, 0);
-		return;
-	}
-	if (dir == "right")
-	{
-		_direction = Vec2i(1, 0);
-		return;
-	}
-	
-	_direction = Vec2i(0, 0); //default
+	auto it = _directions.find(dir);
+	if (it != _directions.end())
+		_direction = it->second;
+	else
+		_direction = Vec2i(0, 0); //default
+}
+
+void Knight::collide(Map *map, Monster *target)
+{
+	target->recieveDamage(_damage);
+	if (target->isDead())
+		map->clearCell(target->coordinates());
+}
+
+void Knight::collide(Map *map, Princess *target)
+{
+	Game::getInstance().setGameState(Game::GameState::exiting);
 }
 
 void Knight::move(Map *map)
 {
-	string curMove;
-	cin >> curMove;
-	setDirection(curMove);
-	
-	if (newCoordinates() == _coordinates)
-		return;
-
+	char dir = _getch();
+	setDirection(dir);
 	if (map->isValidCell(newCoordinates()))
-	{
-		if (map->isPrincess(newCoordinates()))
-		{
-			cout << "You won!" << endl;
-			Game::getInstance().setGameState("exiting");
-		}
-
-		if (map->isZombie(newCoordinates()))
-		{
-			Character *zombie = Game::getInstance().findMonster(newCoordinates());
-			if (zombie == nullptr)
-			{
-				throw std::runtime_error(null_zombie_message);
-			}
-
-			zombie->recieveDamage(damage());
-			if (zombie->isDead())
-			{
-				try
-				{
-					Game::getInstance().deleteMonster(zombie);
-					map->clearCell(newCoordinates());
-				}
-				catch (exception &e)
-				{
-					cout << e.what() << endl;
-					return;
-				}
-			}
-
-			return;
-		}
-
-		if (map->isStone(newCoordinates()))
-		{
-			return;
-		}
-
-		map->move(_coordinates, newCoordinates());
-		setCoordinates(newCoordinates());
-	}
+		collide(map, map->getActor(newCoordinates()));
+	map->setHasActed(_coords);
 }
-

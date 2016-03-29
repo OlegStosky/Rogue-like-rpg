@@ -8,26 +8,26 @@
 #include <queue>
 #include <algorithm>
 #include "Const.h"
-#include "Point.h"
 #include "Vec2i.h"
 
-// Comparator for MinHeap 
-struct PointCompare
-{
-	bool operator()(Point a, Point b) const { return a.f() > b.f(); }
-};
-
-using Heap = std::priority_queue<Point, std::vector<Point>, PointCompare>;
+class Actor;
+class Character;
 
 class Map
 {
 public:
-	void readInp(std::string fileName);
+	void init(std::string fileName);
 	void draw();
 	void move(Vec2i from, Vec2i to);
-	void clearCell(Vec2i cell);
-	
 	Vec2i calcShortestPath(Vec2i from, Vec2i to);
+	void clearHasActed();
+	void clearCell(Vec2i cell);
+	bool hasActed(Vec2i coords){ return _hasActed[coords.y][coords.x]; }
+	void setHasActed(Vec2i coords){ _hasActed[coords.y][coords.x] = true; }
+
+	Actor* getActor(Vec2i character);
+	Character* getHero(){ return (Character*)_hero; }
+	Character* getPrincess(){ return (Character*)_princess; }
 
 	bool isValidCell(Vec2i cell);
 	bool isEmptyCell(Vec2i cell);
@@ -37,13 +37,33 @@ public:
 	bool isHero(Vec2i hero);
 
 private:
-	Point _map[height][width];
+	Actor* _map[height][width];
+	Actor *_hero;
+	Actor *_princess;
+	bool _hasActed[height][width];
+
+	class Point
+	{
+	public:
+		int h, g, f; //a* metrics
+		char symb;
+		Vec2i coords;
+		Vec2i parent; //coordinates of the next cell, lying on the shortest path to hero
+	};
+
+	// Comparator for MinHeap 
+	struct PointCompare
+	{
+		bool operator()(Point a, Point b) const { return a.f > b.f; }
+	};
+
+	using Heap = std::priority_queue<Point, std::vector<Point>, PointCompare>;
 
 	//a* methods
-	void init(Vec2i from); 
+	void init(Vec2i to, Point info[height][width]); 
 	void traverse(Heap &heap,
 		std::vector<Vec2i> &wasVisited,
-		Point current, Vec2i dest);
+		Point cur, Vec2i dest, Point info[height][width]);
 
 	friend class Game;
 };
