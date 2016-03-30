@@ -11,6 +11,6 @@ void Princess::recieveDamage(int damage)
 
 	if (_hp <= 0)
 	{
-		throw std::runtime_error(princess_death_message);
+		throw std::runtime_error(PRINCESS_DEATH_MSG);
 	}
 }

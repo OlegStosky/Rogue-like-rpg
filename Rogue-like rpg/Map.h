@@ -37,10 +37,10 @@ public:
 	bool isHero(Vec2i hero);
 
 private:
-	Actor* _map[height][width];
+	Actor* _map[HEIGHT][WIDTH];
 	Actor *_hero;
 	Actor *_princess;
-	bool _hasActed[height][width];
+	bool _hasActed[HEIGHT][WIDTH];
 
 	class Point
 	{
@@ -60,10 +60,10 @@ private:
 	using Heap = std::priority_queue<Point, std::vector<Point>, PointCompare>;
 
 	//a* methods
-	void init(Vec2i to, Point info[height][width]); 
+	void init(Vec2i to, Point info[HEIGHT][WIDTH]); 
 	void traverse(Heap &heap,
 		std::vector<Vec2i> &wasVisited,
-		Point cur, Vec2i dest, Point info[height][width]);
+		Point cur, Vec2i dest, Point info[HEIGHT][WIDTH]);
 
 	friend class Game;
 };

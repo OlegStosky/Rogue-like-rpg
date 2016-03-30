@@ -44,9 +44,9 @@ void Game::nextMove()
 	_map->clearHasActed();
 	_map->getHero()->act(_map);
 	_map->getPrincess()->act(_map);
-	for (int i = 0; i < height; ++i)
+	for (int i = 0; i < HEIGHT; ++i)
 	{
-		for (int j = 0; j < width; ++j)
+		for (int j = 0; j < WIDTH; ++j)
 		{
 			if (!_map->hasActed(Vec2i(j, i)))
 				_map->getActor(Vec2i(j, i))->act(_map);

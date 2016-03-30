@@ -16,47 +16,47 @@ void Map::init(std::string fileName)
 		int curString = 0;
 		while (getline(mapStream, inp))
 		{
-			for (int i = 0; i < width; ++i)
+			for (int i = 0; i < WIDTH; ++i)
 			{
 				switch (inp[i])
 				{
-				case knight_symb:
-					_map[curString][i] = new Knight(Vec2i(i, curString), hero_hp, knight_symb, knight_damage);
+				case KNIGHT_SYMB:
+					_map[curString][i] = new Knight(Vec2i(i, curString), HERO_HP, KNIGHT_SYMB, KNIGHT_DAMAGE);
 					_hero = _map[curString][i];
 					break;
 
-				case princess_symb:
-					_map[curString][i] = new Princess(Vec2i(i, curString), princess_hp, princess_symb, princess_damage);
+				case PRINCESS_SYMB:
+					_map[curString][i] = new Princess(Vec2i(i, curString), PRINCESS_HP, PRINCESS_SYMB, PRINCESS_DAMAGE);
 					_princess = _map[curString][i];
 					break;
 
-				case zombie_symb:
-					_map[curString][i] = new Zombie(Vec2i(i, curString), zombie_hp, zombie_symb, zombie_damage);
+				case ZOMBIE_SYMB:
+					_map[curString][i] = new Zombie(Vec2i(i, curString), ZOMBIE_HP, ZOMBIE_SYMB, ZOMBIE_DAMAGE);
 					break;
 
-				case dragon_symb:
-					_map[curString][i] = new Dragon(Vec2i(i, curString), dragon_hp, dragon_symb, dragon_damage);
+				case DRAGON_SYMB:
+					_map[curString][i] = new Dragon(Vec2i(i, curString), DRAGON_HP, DRAGON_SYMB, DRAGON_DAMAGE);
 					break;
 
-				case cell_symb:
-					_map[curString][i] = new EmptyCell(Vec2i(i, curString), cell_symb);
+				case EMPTY_CELL_SYMB:
+					_map[curString][i] = new EmptyCell(Vec2i(i, curString), EMPTY_CELL_SYMB);
 					break;
 
-				case wood_block_symb:
-					_map[curString][i] = new WoodBlock(Vec2i(i, curString), wood_block_symb);
+				case WOOD_BLOCK_SYMB:
+					_map[curString][i] = new WoodBlock(Vec2i(i, curString), WOOD_BLOCK_SYMB);
 					break;
 				}
 			}
 			curString++;
 		}
 
-		if (curString != height)
+		if (curString != HEIGHT)
 		{
-			throw runtime_error(invalid_tilemap_error_message);
+			throw runtime_error(INVALID_TILEMAP_ERR_MSG);
 		}
 
 		if (_hero == nullptr || _princess == nullptr)
-			throw runtime_error(no_hero_or_princess_error_message);
+			throw runtime_error(NO_HERO_OR_PRINCESS_ERR_MSG);
 		
 		mapStream.close();
 	}
@@ -65,9 +65,9 @@ void Map::init(std::string fileName)
 void Map::draw()
 {
 	system("cls");
-	for (int i = 0; i < height; ++i)
+	for (int i = 0; i < HEIGHT; ++i)
 	{
-		for (int j = 0; j < width; ++j)
+		for (int j = 0; j < WIDTH; ++j)
 		{
 			cout << _map[i][j]->symbol();
 		}
@@ -94,13 +94,13 @@ Actor* Map::getActor(Vec2i actor)
 void Map::clearCell(Vec2i cell)
 {
 	delete _map[cell.y][cell.x];
-	_map[cell.y][cell.x] = new EmptyCell(cell, cell_symb);
+	_map[cell.y][cell.x] = new EmptyCell(cell, EMPTY_CELL_SYMB);
 }
 
 //Calculates shortest path between 2 points, using a* algorithm
 Vec2i Map::calcShortestPath(Vec2i from, Vec2i to)
 {
-	Point info[height][width];
+	Point info[HEIGHT][WIDTH];
 	init(to, info);
 	Heap heap;
 	vector<Vec2i> wasVisited;
@@ -110,22 +110,22 @@ Vec2i Map::calcShortestPath(Vec2i from, Vec2i to)
 }
 
 //init all the points for a*
-void Map::init(Vec2i to, Point info[height][width])
+void Map::init(Vec2i to, Point info[HEIGHT][WIDTH])
 {
-	for (int i = 0; i < height; ++i)
+	for (int i = 0; i < HEIGHT; ++i)
 	{
-		for (int j = 0; j < width; ++j)
+		for (int j = 0; j < WIDTH; ++j)
 		{
 			info[i][j].coords = Vec2i(j, i);
 			info[i][j].h = abs(to.x - j) + abs(to.y - i);
-			info[i][j].g = inf;
+			info[i][j].g = INF;
 			info[i][j].f = 0;
 			info[i][j].symb = _map[i][j]->symbol();
 		}
 	}
 }
 
-void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest, Point info[height][width])
+void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest, Point info[HEIGHT][WIDTH])
 {
 	if (cur.coords == dest)
 		return;
@@ -143,10 +143,10 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest,
 				if (find(wasVisited.begin(), wasVisited.end(),
 					newCoord) == wasVisited.end())
 				{
-					if ((info[cur.coords.y][cur.coords.x].g + g_distance) < info[newCoord.y][newCoord.x].g)
+					if ((info[cur.coords.y][cur.coords.x].g + G_DISTANCE) < info[newCoord.y][newCoord.x].g)
 					{
 						info[newCoord.y][newCoord.x].parent = cur.coords;
-						info[newCoord.y][newCoord.x].g = info[cur.coords.y][cur.coords.x].g + g_distance;
+						info[newCoord.y][newCoord.x].g = info[cur.coords.y][cur.coords.x].g + G_DISTANCE;
 						info[newCoord.y][newCoord.x].f = info[newCoord.y][newCoord.x].g +
 							info[newCoord.y][newCoord.x].h;
 						heap.push(info[newCoord.y][newCoord.x]);
@@ -166,38 +166,38 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest,
 
 void Map::clearHasActed()
 {
-	for (int i = 0; i < height; ++i)
-		for (int j = 0; j < width; ++j)
+	for (int i = 0; i < HEIGHT; ++i)
+		for (int j = 0; j < WIDTH; ++j)
 			_hasActed[i][j] = false;
 }
 
 bool Map::isValidCell(Vec2i cell)
 {
-	return (cell.x <= width - 1) && (cell.x >= 0) && 
-		(cell.y <= height - 1) && (cell.y >= 0);
+	return (cell.x <= WIDTH - 1) && (cell.x >= 0) && 
+		(cell.y <= HEIGHT - 1) && (cell.y >= 0);
 }
 
 bool Map::isEmptyCell(Vec2i cell)
 {
-	return _map[cell.y][cell.x]->symbol() == cell_symb	;
+	return _map[cell.y][cell.x]->symbol() == EMPTY_CELL_SYMB	;
 }
 
 bool Map::isPrincess(Vec2i princess)
 {
-	return _map[princess.y][princess.x]->symbol() == princess_symb;
+	return _map[princess.y][princess.x]->symbol() == PRINCESS_SYMB;
 }
 
 bool Map::isStone(Vec2i stone)
 {
-	return _map[stone.y][stone.x]->symbol() == wood_block_symb;
+	return _map[stone.y][stone.x]->symbol() == WOOD_BLOCK_SYMB;
 }
 
 bool Map::isZombie(Vec2i zombie)
 {
-	return _map[zombie.y][zombie.x]->symbol() == zombie_symb;
+	return _map[zombie.y][zombie.x]->symbol() == ZOMBIE_SYMB;
 }
 
 bool Map::isHero(Vec2i hero)
 {
-	return _map[hero.y][hero.x]->symbol() == knight_symb;
+	return _map[hero.y][hero.x]->symbol() == KNIGHT_SYMB;
 }
