@@ -28,9 +28,9 @@ public:
 	virtual void recieveDamage(int damage) { _hp -= damage; }
 	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override {}
-	void collide(Map *map, Knight *target) {}
-	void collide(Map *map, Princess *target) {}
-	void collide(Map *map, Monster *target) {}
+	virtual void collide(Map *map, Knight *target) {}
+	virtual void collide(Map *map, Princess *target) {}
+	virtual void collide(Map *map, Monster *target) {}
 
 protected:
 	Vec2i _direction;
@@ -47,7 +47,7 @@ public:
 
 	void setDirection(char direction);
 	void recieveDamage(int damage) override;
-÷	void collide(Map *map, Actor *target) override { target->collide(map, this); }
+	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override { target->collide(map, this); }
 	void collide(Map *map, Monster *target);
 	void collide(Map *map, Princess *target);
@@ -67,6 +67,7 @@ public:
 	{
 	}
 
+	void collide(Map *map, Character *target) override { target->collide(map, this); }
 	void recieveDamage(int damage) override;
 };
 
@@ -80,8 +81,8 @@ public:
 
 	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override { target->collide(map, this); }
-	void collide(Map *map, Knight *target);
-	void collide(Map *map, Princess *target);
+	void collide(Map *map, Knight *target) override;
+	void collide(Map *map, Princess *target) override;
 
 private:
 	void move(Map *map) override;
