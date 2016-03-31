@@ -51,3 +51,10 @@ void Knight::move(Map *map)
 		collide(map, map->getActor(newCoordinates()));
 	map->setHasActed(_coords);
 }
+
+void Knight::heal(int ammount)
+{
+	_hp += ammount;
+	if (_hp > KNIGHT_HP)
+		_hp = KNIGHT_HP;
+}

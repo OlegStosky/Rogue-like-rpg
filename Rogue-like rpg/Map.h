@@ -12,10 +12,14 @@
 
 class Actor;
 class Character;
+class Spawner;
+class RemoteSpawner;
 
 class Map
 {
 public:
+	Map();
+
 	void init(std::string fileName);
 	void draw();
 	void move(Vec2i from, Vec2i to);
@@ -23,11 +27,13 @@ public:
 	void clearHasActed();
 	void clearCell(Vec2i cell);
 	bool hasActed(Vec2i coords){ return _hasActed[coords.y][coords.x]; }
-	void setHasActed(Vec2i coords){ _hasActed[coords.y][coords.x] = true; }
-
-	Actor* getActor(Vec2i character);
+	void replace(Vec2i coords, Actor *target);
+	
+	std::vector<RemoteSpawner*> getSpawners(){ return _spawners; }
+	Actor* getActor(Vec2i actor);
 	Character* getHero(){ return (Character*)_hero; }
 	Character* getPrincess(){ return (Character*)_princess; }
+	void setHasActed(Vec2i coords){ _hasActed[coords.y][coords.x] = true; }
 
 	bool isValidCell(Vec2i cell);
 	bool isEmptyCell(Vec2i cell);
@@ -41,6 +47,7 @@ private:
 	Actor *_hero;
 	Actor *_princess;
 	bool _hasActed[HEIGHT][WIDTH];
+	std::vector<RemoteSpawner*> _spawners;
 
 	class Point
 	{

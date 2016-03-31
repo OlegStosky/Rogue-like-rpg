@@ -3,8 +3,14 @@
 #include "Actor.h"
 #include "Character.h"
 #include "Terrain.h"
+#include "Spawner.h"
 
 using namespace std;
+
+Map::Map()
+{
+	_spawners.push_back(new MedkitSpawner(MEDKIT_COOLDOWN));
+}
 
 void Map::init(std::string fileName)
 {
@@ -21,7 +27,7 @@ void Map::init(std::string fileName)
 				switch (inp[i])
 				{
 				case KNIGHT_SYMB:
-					_map[curString][i] = new Knight(Vec2i(i, curString), HERO_HP, KNIGHT_SYMB, KNIGHT_DAMAGE);
+					_map[curString][i] = new Knight(Vec2i(i, curString), KNIGHT_HP, KNIGHT_SYMB, KNIGHT_DAMAGE);
 					_hero = _map[curString][i];
 					break;
 
@@ -44,6 +50,14 @@ void Map::init(std::string fileName)
 
 				case WOOD_BLOCK_SYMB:
 					_map[curString][i] = new WoodBlock(Vec2i(i, curString), WOOD_BLOCK_SYMB);
+					break;
+
+				case GRAVEYARD_SYMB:
+					_map[curString][i] = new Graveyard(Vec2i(i, curString), GRAVEYARD_SYMB, GRAVEYARD_COOLDOWN);
+					break;
+
+				case DRAGON_NEST_SYMB:
+					_map[curString][i] = new DragonNest(Vec2i(i, curString), DRAGON_NEST_SYMB, DRAGON_NEST_COOLDOWN);
 					break;
 				}
 			}
@@ -89,6 +103,8 @@ Actor* Map::getActor(Vec2i actor)
 {
 	if (isValidCell(actor))
 		return _map[actor.y][actor.x];
+
+	return nullptr;
 }
 
 void Map::clearCell(Vec2i cell)
@@ -169,6 +185,14 @@ void Map::clearHasActed()
 	for (int i = 0; i < HEIGHT; ++i)
 		for (int j = 0; j < WIDTH; ++j)
 			_hasActed[i][j] = false;
+}
+
+void Map::replace(Vec2i coords, Actor *target)
+{
+	if (_map[coords.y][coords.x] == nullptr)
+		throw std::runtime_error(DELETE_ERR_MSG);
+	delete _map[coords.y][coords.x];
+	_map[coords.y][coords.x] = target;
 }
 
 bool Map::isValidCell(Vec2i cell)

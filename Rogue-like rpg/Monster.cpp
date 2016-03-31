@@ -16,6 +16,20 @@ void Zombie::recieveDamage(int damage)
 	}
 }
 
+void Zombie::heal(int ammount)
+{
+	_hp += ammount;
+	if (_hp > ZOMBIE_HP)
+		_hp = ZOMBIE_SYMB;
+}
+
+void Dragon::heal(int ammount)
+{
+	_hp += ammount;
+	if (_hp > DRAGON_HP)
+		_hp = DRAGON_SYMB;
+}
+
 void Monster::collide(Map *map, Knight *target)
 {
 	target->recieveDamage(_damage);

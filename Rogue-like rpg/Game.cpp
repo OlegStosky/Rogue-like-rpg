@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Spawner.h"
 
 using namespace std;
 
@@ -52,6 +53,9 @@ void Game::nextMove()
 				_map->getActor(Vec2i(j, i))->act(_map);
 		}
 	}
+	vector<RemoteSpawner*> spawners = _map->getSpawners();
+	for (auto spawner : spawners)
+		spawner->act(_map);
 }
 
 

@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Const.h"
 #include "Vec2i.h"
+#include "Item.h"
 
 class Character : public Actor
 {
@@ -26,11 +27,13 @@ public:
 	
 	void act(Map *map) override { move(map); }
 	virtual void recieveDamage(int damage) { _hp -= damage; }
+	virtual void heal(int ammount) {}
 	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override {}
 	virtual void collide(Map *map, Knight *target) {}
 	virtual void collide(Map *map, Princess *target) {}
 	virtual void collide(Map *map, Monster *target) {}
+	virtual void collide(Map *map, Medkit *target) {}
 
 protected:
 	Vec2i _direction;
@@ -45,10 +48,12 @@ class Knight : public Character
 public:
 	Knight(Vec2i coords, int hp, char symb, int damage);
 
+	void heal(int ammount) override;
 	void setDirection(char direction);
 	void recieveDamage(int damage) override;
 	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override { target->collide(map, this); }
+	void collide(Map *map, Medkit *target) override { target->collide(map, this); }
 	void collide(Map *map, Monster *target);
 	void collide(Map *map, Princess *target);
 
@@ -96,6 +101,7 @@ public:
 	{
 	}
 
+	void heal(int ammount) override;
 	void recieveDamage(int damage) override;
 };
 
@@ -107,6 +113,7 @@ public:
 	{
 	}
 
+	void heal(int ammount) override;
 	void recieveDamage(int damage){};
 };
 
