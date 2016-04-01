@@ -21,6 +21,25 @@ void Monster::move(Map *map)
 	map->setHasActed(_coords);
 }
 
+void Dragon::move(Map *map)
+{
+	for (int i = -1; i < 1; ++i)
+	{
+		for (int j = -1; j < 1; ++j)
+		{
+			if (map->isHero(_coords + Vec2i(i, j)))
+			{
+				collide(map, map->getActor(_coords + Vec2i(i, j)));
+				return;
+			}
+		}
+	}
+	_direction = Vec2i(rand() % 2, rand() % 2);
+	if (map->isValidCell(newCoordinates()))
+		collide(map, map->getActor(newCoordinates()));
+	map->setHasActed(_coords);
+}
+
 void Zombie::recieveDamage(int damage)
 {
 	_hp -= damage;

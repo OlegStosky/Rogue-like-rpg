@@ -121,6 +121,9 @@ public:
 
 	void heal(int ammount) override;
 	void recieveDamage(int damage);
+
+private:
+	void move(Map *map) override;
 };
 
 class Wizard : public Monster

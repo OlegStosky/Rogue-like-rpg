@@ -11,9 +11,9 @@ void Spawner::act(Map *map)
 
 Vec2i Spawner::findEmptyCell(Map *map)
 {
-	for (int i = 0; i < WIDTH; ++i)
+	for (int i = -1; i < 1; ++i)
 	{
-		for (int j = 0; j < HEIGHT; ++j)
+		for (int j = -1; j < 1; ++j)
 		{
 			if (map->isValidCell(_coords + Vec2i(i, j)))
 			{
@@ -46,7 +46,7 @@ void DragonNest::spawn(Map *map)
 	Vec2i coords = findEmptyCell(map);
 	if (coords == Vec2i(0, 0))
 		return;
-	Dragon *dragon = new Dragon(coords, ZOMBIE_HP, DRAGON_SYMB, DRAGON_DAMAGE);
+	Dragon *dragon = new Dragon(coords, DRAGON_HP, DRAGON_SYMB, DRAGON_DAMAGE);
 	map->replace(coords, dragon);
 	_curCooldown = 0;
 }

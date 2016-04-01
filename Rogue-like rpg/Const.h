@@ -15,13 +15,13 @@ const int ZOMBIE_HP		= 30;
 const int PRINCESS_HP	= 50;
 const int DRAGON_HP = 40;
 const int WIZARD_HP = 30;
-const int WIZARD_MANA = 30;
+const int WIZARD_MANA = 20;
 const int WIZARD_MANA_REGEN = 5;
 
 const int KNIGHT_DAMAGE	= 15;
-const int ZOMBIE_DAMAGE = 10;
+const int ZOMBIE_DAMAGE = 8;
 const int PRINCESS_DAMAGE = 10;
-const int DRAGON_DAMAGE = 15;
+const int DRAGON_DAMAGE = 17;
 const int WIZARD_DAMAGE = 5;
 const int FIREBALL_DAMAGE = 17;
 const int FIREBALL_MANA_COST = 10;
@@ -37,8 +37,8 @@ const char GRAVEYARD_SYMB = 'G';
 const char DRAGON_NEST_SYMB = 'N';
 const char MEDKIT_SYMB = '+';
 
-const int GRAVEYARD_COOLDOWN = 13;
-const int DRAGON_NEST_COOLDOWN = 15;
+const int GRAVEYARD_COOLDOWN = 17;
+const int DRAGON_NEST_COOLDOWN = 19;
 const int MEDKIT_COOLDOWN = 3;
 
 const int MEDKIT_HEAL_POWER = 10;
