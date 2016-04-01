@@ -61,6 +61,7 @@ public:
 		_curCooldown(0)
 		{
 		}
+	virtual ~RemoteSpawner() {}
 
 	virtual void act(Map *map) = 0;
 	bool isReady(){ return _curCooldown >= _cooldown; }

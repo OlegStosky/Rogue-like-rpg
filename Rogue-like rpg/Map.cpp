@@ -12,6 +12,22 @@ Map::Map()
 	_spawners.push_back(new MedkitSpawner(MEDKIT_COOLDOWN));
 }
 
+Map::~Map()
+{
+	for (int i = 0; i < HEIGHT; ++i)
+	{
+		for (int j = 0; j < WIDTH; ++j)
+		{
+			delete _map[i][j];
+		}
+	}
+
+	for (auto spawner : _spawners)
+	{
+		delete spawner;
+	}
+}
+
 void Map::init(std::string fileName)
 {
 	ifstream mapStream(fileName);

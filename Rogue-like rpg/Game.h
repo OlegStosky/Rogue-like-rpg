@@ -14,7 +14,8 @@ public:
 	enum class GameState { playing, paused, exiting };
 
 	static Game& getInstance();
-	
+	~Game();
+
 	void start();
 	void gameLoop();
 	void nextMove();

@@ -9,6 +9,11 @@ Game& Game::getInstance()
 	return instance;
 }
 
+Game::~Game()
+{
+	delete _map;
+}
+
 Game::Game()
 {
 	_map = new Map;

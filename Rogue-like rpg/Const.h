@@ -14,16 +14,20 @@ const int KNIGHT_HP		= 100;
 const int ZOMBIE_HP		= 30;
 const int PRINCESS_HP	= 50;
 const int DRAGON_HP = 40;
+const int WIZARD_HP = 30;
 
 const int KNIGHT_DAMAGE	= 15;
 const int ZOMBIE_DAMAGE = 10;
 const int PRINCESS_DAMAGE = 10;
 const int DRAGON_DAMAGE = 15;
+const int WIZARD_DAMAGE = 5;
+const int FIREBALL_DAMAGE = 17;
 
 const char PRINCESS_SYMB = 'P';
 const char KNIGHT_SYMB = 'K';
 const char ZOMBIE_SYMB = 'Z';
 const char DRAGON_SYMB = 'D';
+const char WIZARD_SYMB = 'W';
 const char EMPTY_CELL_SYMB = '.';
 const char WOOD_BLOCK_SYMB = '#';
 const char GRAVEYARD_SYMB = 'G';

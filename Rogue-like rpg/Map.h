@@ -19,6 +19,7 @@ class Map
 {
 public:
 	Map();
+	~Map();
 
 	void init(std::string fileName);
 	void draw();

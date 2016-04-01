@@ -114,6 +114,20 @@ public:
 	}
 
 	void heal(int ammount) override;
-	void recieveDamage(int damage){};
+	void recieveDamage(int damage);
 };
 
+class Wizard : public Monster
+{
+public:
+	Wizard(Vec2i coords, int hp, char symb, int damage) :
+		Monster(coords, hp, symb, damage)
+	{
+	}
+
+	void heal(int ammount) override;
+	void recieveDamage(int damage);
+
+private:
+	void move(Map *map) override;
+};

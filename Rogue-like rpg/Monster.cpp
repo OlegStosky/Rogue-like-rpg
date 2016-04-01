@@ -45,3 +45,23 @@ void Monster::move(Map *map)
 	Vec2i newCoords = map->calcShortestPath(map->getHero()->coordinates(), _coords);
 	collide(map, map->getActor(newCoords));
 }
+
+void Dragon::recieveDamage(int damage)
+{
+	_hp -= damage;
+
+	Game::getInstance().pushLogMessage("Dragon received " + to_string(damage) + " damage.\n");
+	Game::getInstance().pushLogMessage("Dragon has " + to_string(_hp) + " hp left.\n");
+
+	if (isDead())
+	{
+		Game::getInstance().pushLogMessage("Dragon died.\n");
+	}
+}
+
+void Wizard::heal(int ammount)
+{
+	_hp += ammount;
+	if (_hp > WIZARD_HP)
+		_hp = DRAGON_HP;
+}
