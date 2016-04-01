@@ -75,6 +75,9 @@ void Map::init(std::string fileName)
 				case DRAGON_NEST_SYMB:
 					_map[curString][i] = new DragonNest(Vec2i(i, curString), DRAGON_NEST_SYMB, DRAGON_NEST_COOLDOWN);
 					break;
+
+				case WIZARD_SYMB:
+					_map[curString][i] = new Wizard(Vec2i(i, curString), WIZARD_HP, WIZARD_SYMB, WIZARD_DAMAGE, WIZARD_MANA);
 				}
 			}
 			curString++;
@@ -219,30 +222,30 @@ bool Map::isValidCell(Vec2i cell)
 
 bool Map::isEmptyCell(Vec2i cell)
 {
-	return _map[cell.y][cell.x]->symbol() == EMPTY_CELL_SYMB	;
+	return isValidCell(cell) && _map[cell.y][cell.x]->symbol() == EMPTY_CELL_SYMB	;
 }
 
 bool Map::isPrincess(Vec2i princess)
 {
-	return _map[princess.y][princess.x]->symbol() == PRINCESS_SYMB;
+	return isValidCell(princess) && _map[princess.y][princess.x]->symbol() == PRINCESS_SYMB;
 }
 
 bool Map::isStone(Vec2i stone)
 {
-	return _map[stone.y][stone.x]->symbol() == WOOD_BLOCK_SYMB;
+	return isValidCell(stone) && _map[stone.y][stone.x]->symbol() == WOOD_BLOCK_SYMB;
 }
 
 bool Map::isZombie(Vec2i zombie)
 {
-	return _map[zombie.y][zombie.x]->symbol() == ZOMBIE_SYMB;
+	return isValidCell(zombie) && _map[zombie.y][zombie.x]->symbol() == ZOMBIE_SYMB;
 }
 
 bool Map::isHero(Vec2i hero)
 {
-	return _map[hero.y][hero.x]->symbol() == KNIGHT_SYMB;
+	return isValidCell(hero) && _map[hero.y][hero.x]->symbol() == KNIGHT_SYMB;
 }
 
 bool Map::isItem(Vec2i item)
 {
-	return _map[item.y][item.x]->symbol() == '+';
+	return isValidCell(item) && _map[item.y][item.x]->symbol() == '+';
 }

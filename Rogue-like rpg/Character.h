@@ -6,6 +6,7 @@
 #include "Const.h"
 #include "Vec2i.h"
 #include "Item.h"
+#include "Magic.h"
 
 class Character : public Actor
 {
@@ -34,6 +35,8 @@ public:
 	virtual void collide(Map *map, Princess *target) {}
 	virtual void collide(Map *map, Monster *target) {}
 	virtual void collide(Map *map, Medkit *target) {}
+	virtual void collide(Map *map, Magic *target) {}
+	virtual void collide(Map *map, Wizard *target) {}
 
 protected:
 	Vec2i _direction;
@@ -54,8 +57,9 @@ public:
 	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 	void collide(Map *map, Character *target) override { target->collide(map, this); }
 	void collide(Map *map, Medkit *target) override { target->collide(map, this); }
-	void collide(Map *map, Monster *target);
-	void collide(Map *map, Princess *target);
+	void collide(Map *map, Monster *target) override;
+	void collide(Map *map, Princess *target) override;
+	void collide(Map *map, Magic *target) override { target->collide(map, this); }
 
 private:
 	std::map<char, Vec2i> _directions;
@@ -72,8 +76,9 @@ public:
 	{
 	}
 
-	void collide(Map *map, Character *target) override { target->collide(map, this); }
 	void recieveDamage(int damage) override;
+	void collide(Map *map, Character *target) override { target->collide(map, this); }
+	void collide(Map *map, Magic *target) override { target->collide(map, this); }
 };
 
 class Monster : public Character
@@ -88,6 +93,7 @@ public:
 	void collide(Map *map, Character *target) override { target->collide(map, this); }
 	void collide(Map *map, Knight *target) override;
 	void collide(Map *map, Princess *target) override;
+	void collide(Map *map, Magic *target){ target->collide(map, this); }
 
 private:
 	void move(Map *map) override;
@@ -120,14 +126,14 @@ public:
 class Wizard : public Monster
 {
 public:
-	Wizard(Vec2i coords, int hp, char symb, int damage) :
-		Monster(coords, hp, symb, damage)
-	{
-	}
+	Wizard(Vec2i coords, int hp, char symb, int damage, int mana);
 
 	void heal(int ammount) override;
 	void recieveDamage(int damage);
+	void collide(Map *map, Actor *target) override { target->collide(map, this); }
 
 private:
 	void move(Map *map) override;
+	std::map<int, Vec2i> _directions;
+	int _mana;
 };

@@ -10,7 +10,8 @@ public:
 		{
 		}
 
-	virtual void collide(Map *map, Character *target) override = 0;
+	void collide(Map *map, Character *target) override = 0;
+	void collide(Map *map, Magic *target) override;
 };
 
 class Medkit : public Item

@@ -26,6 +26,11 @@ Vec2i Spawner::findEmptyCell(Map *map)
 	return Vec2i(0, 0);
 }
 
+void Spawner::collide(Map *map, Magic *target)
+{
+	map->clearCell(target->coordinates());
+}
+
 void Graveyard::spawn(Map *map)
 {
 	Vec2i coords = findEmptyCell(map);

@@ -22,6 +22,7 @@ public:
 	void act(Map *map) override;
 	virtual void spawn(Map *map) = 0;
 	bool isReady() { return _curCooldown >= _cooldown; }
+	void collide(Map *map, Magic *target) override;
 
 
 protected:
