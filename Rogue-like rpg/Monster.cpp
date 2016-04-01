@@ -20,14 +20,14 @@ void Zombie::heal(int ammount)
 {
 	_hp += ammount;
 	if (_hp > ZOMBIE_HP)
-		_hp = ZOMBIE_SYMB;
+		_hp = ZOMBIE_HP;
 }
 
 void Dragon::heal(int ammount)
 {
 	_hp += ammount;
 	if (_hp > DRAGON_HP)
-		_hp = DRAGON_SYMB;
+		_hp = DRAGON_HP;
 }
 
 void Monster::collide(Map *map, Knight *target)

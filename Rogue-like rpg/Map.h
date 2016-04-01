@@ -41,6 +41,7 @@ public:
 	bool isZombie(Vec2i zombie);
 	bool isStone(Vec2i stone);
 	bool isHero(Vec2i hero);
+	bool isItem(Vec2i item);
 
 private:
 	Actor* _map[HEIGHT][WIDTH];

@@ -153,7 +153,7 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest,
 		Vec2i newCoord = cur.coords + curDir;
 		if (isValidCell(newCoord))
 		{
-			if (isEmptyCell(newCoord) || (isZombie(newCoord) && newCoord == dest))
+			if (isEmptyCell(newCoord) || (isZombie(newCoord) && newCoord == dest) || isItem(newCoord))
 			{
 				//if we havent traversed from this cell
 				if (find(wasVisited.begin(), wasVisited.end(),
@@ -224,4 +224,9 @@ bool Map::isZombie(Vec2i zombie)
 bool Map::isHero(Vec2i hero)
 {
 	return _map[hero.y][hero.x]->symbol() == KNIGHT_SYMB;
+}
+
+bool Map::isItem(Vec2i item)
+{
+	return _map[item.y][item.x]->symbol() == '+';
 }
