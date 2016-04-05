@@ -53,9 +53,9 @@ const std::string NO_HERO_OR_PRINCESS_ERR_MSG = "Can`t start game without hero/p
 
 const std::string FIREBAL_DIRECTION_ERR = "Unknown direction";
 
-std::map<int, Vec2i> DIRECTIONS = {
+static std::map<int, Vec2i> DIRECTIONS = {
 	{ 0, Vec2i(1, 0) },
 	{ 1, Vec2i(-1, 0) },
 	{ 2, Vec2i(0, 1) },
 	{ 3, Vec2i(0, -1) }
-}
+};
