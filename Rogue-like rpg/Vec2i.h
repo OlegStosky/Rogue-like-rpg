@@ -18,7 +18,6 @@ struct Vec2i
 		}
 	
 	double abs();
-	static Vec2i getNextPair(int cnt);
 	Vec2i operator+(const Vec2i &rhs);
 	Vec2i operator-(const Vec2i &rhs);
 	Vec2i operator*(int rhs);

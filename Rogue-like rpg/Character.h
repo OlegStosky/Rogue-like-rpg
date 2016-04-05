@@ -129,7 +129,11 @@ private:
 class Wizard : public Monster
 {
 public:
-	Wizard(Vec2i coords, int hp, char symb, int damage, int mana);
+	Wizard(Vec2i coords, int hp, char symb, int damage, int mana) :
+		Monster(coords, hp, symb, damage),
+		_mana(mana)
+		{
+		}
 
 	void heal(int ammount) override;
 	void recieveDamage(int damage);
@@ -137,6 +141,5 @@ public:
 
 private:
 	void move(Map *map) override;
-	std::map<int, Vec2i> _directions;
 	int _mana;
 };

@@ -168,7 +168,7 @@ void Map::traverse(Heap &heap, vector<Vec2i> &wasVisited, Point cur, Vec2i dest,
 
 	for (int i = 0; i < 4; ++i)
 	{
-		Vec2i curDir = Vec2i::getNextPair(i); // go through all neighbour cells
+		Vec2i curDir = DIRECTIONS[i]; // go through all neighbour cells
 		Vec2i newCoord = cur.coords + curDir;
 		if (isValidCell(newCoord))
 		{

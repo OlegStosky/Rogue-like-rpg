@@ -80,16 +80,6 @@ void Dragon::recieveDamage(int damage)
 	}
 }
 
-Wizard::Wizard(Vec2i coords, int hp, char symb, int damage, int mana) :
-	Monster(coords, hp, symb, damage),
-	_mana(mana)
-{
-	_directions[0] = Vec2i(1, 0);
-	_directions[1] = Vec2i(-1, 0);
-	_directions[2] = Vec2i(0, 1);
-	_directions[3] = Vec2i(0, -1);
-}
-
 void Wizard::recieveDamage(int damage)
 {
 	_hp -= damage;
@@ -118,7 +108,7 @@ void Wizard::move(Map *map)
 	{
 		if (_mana >= FIREBALL_MANA_COST)
 		{
-			Vec2i fireBallDir = _directions[rand() % 4];
+			Vec2i fireBallDir = DIRECTIONS[rand() % 4];
 			Vec2i fireBallCoords = _coords + fireBallDir;
 			if (map->isEmptyCell(fireBallCoords))
 				map->replace(fireBallCoords, new FireBall(fireBallCoords, fireBallDir, FIREBALL_DAMAGE));
@@ -127,7 +117,7 @@ void Wizard::move(Map *map)
 	}
 	if (curMove == 1)
 	{
-		_direction = _directions[rand() % 4];
+		_direction = DIRECTIONS[rand() % 4];
 		if (map->isValidCell(newCoordinates()))
 			collide(map, map->getActor(newCoordinates()));
 	}
