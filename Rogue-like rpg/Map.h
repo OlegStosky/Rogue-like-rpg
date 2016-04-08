@@ -26,7 +26,7 @@ public:
 	void move(Vec2i from, Vec2i to);
 	Vec2i calcShortestPath(Vec2i from, Vec2i to);
 	void clearHasActed();
-	void clearCell(Vec2i cell);
+	void clearCell(Vec2i cell); //replaces object with empty cell
 	bool hasActed(Vec2i coords){ return _hasActed[coords.y][coords.x]; }
 	void replace(Vec2i coords, Actor *target);
 	
@@ -51,6 +51,7 @@ private:
 	bool _hasActed[HEIGHT][WIDTH];
 	std::vector<RemoteSpawner*> _spawners;
 
+	/////////////////////////// A* classes and methods ///////////////
 	class Point
 	{
 	public:

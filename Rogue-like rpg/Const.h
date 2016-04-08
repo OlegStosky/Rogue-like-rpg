@@ -7,8 +7,8 @@
 const int INF = INT_MAX;
 const int G_DISTANCE = 10;
 
-const int WIDTH			= 27; //27
-const int HEIGHT		= 11; //11
+const int WIDTH			= 27; 
+const int HEIGHT		= 11; 
 
 const int KNIGHT_HP		= 100;
 const int ZOMBIE_HP		= 30;
@@ -19,7 +19,7 @@ const int WIZARD_MANA = 20;
 const int WIZARD_MANA_REGEN = 5;
 
 const int KNIGHT_DAMAGE	= 15;
-const int ZOMBIE_DAMAGE = 8;
+const int ZOMBIE_DAMAGE = 4;
 const int PRINCESS_DAMAGE = 10;
 const int DRAGON_DAMAGE = 17;
 const int WIZARD_DAMAGE = 5;
