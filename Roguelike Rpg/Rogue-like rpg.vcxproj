@@ -71,8 +71,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>C:\SFML VS\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -125,16 +126,19 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Const.h" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Magic.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="ParserExceptions.h" />
     <ClInclude Include="Spawnable.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Vec2i.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Knight.cpp" />

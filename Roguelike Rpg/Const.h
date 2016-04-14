@@ -3,28 +3,30 @@
 #include <string>
 #include <map>
 #include "Vec2i.h"
+#include "ConfigManager.h"
 
 const int INF = INT_MAX;
 const int G_DISTANCE = 10;
 
-const int WIDTH			= 27; 
-const int HEIGHT		= 11; 
+const int WIDTH = 27;
+const int HEIGHT = 11;
 
-const int KNIGHT_HP		= 100;
-const int ZOMBIE_HP		= 30;
-const int PRINCESS_HP	= 50;
-const int DRAGON_HP = 40;
-const int WIZARD_HP = 30;
-const int WIZARD_MANA = 20;
-const int WIZARD_MANA_REGEN = 5;
+const int KNIGHT_HP = ConfigManager::getInstance().getIntegerValue("KNIGHT_HP");
+const int ZOMBIE_HP = ConfigManager::getInstance().getIntegerValue("ZOMBIE_HP");
+const int PRINCESS_HP = ConfigManager::getInstance().getIntegerValue("PRINCESS_HP");
+const int DRAGON_HP = ConfigManager::getInstance().getIntegerValue("DRAGON_HP");
+const int WIZARD_HP = ConfigManager::getInstance().getIntegerValue("WIZARD_HP");
+const int WIZARD_MANA = ConfigManager::getInstance().getIntegerValue("WIZARD_MANA");
+const int WIZARD_MANA_REGEN = ConfigManager::getInstance().getIntegerValue("WIZARD_MANA_REGEN");
 
-const int KNIGHT_DAMAGE	= 15;
-const int ZOMBIE_DAMAGE = 4;
-const int PRINCESS_DAMAGE = 10;
-const int DRAGON_DAMAGE = 17;
-const int WIZARD_DAMAGE = 5;
-const int FIREBALL_DAMAGE = 17;
-const int FIREBALL_MANA_COST = 10;
+const int KNIGHT_DAMAGE = ConfigManager::getInstance().getIntegerValue("KNIGHT_DAMAGE");
+const int ZOMBIE_DAMAGE = ConfigManager::getInstance().getIntegerValue("ZOMBIE_DAMAGE");
+const int PRINCESS_DAMAGE = ConfigManager::getInstance().getIntegerValue("PRINCESS_DAMAGE");
+const int DRAGON_DAMAGE = ConfigManager::getInstance().getIntegerValue("DRAGON_DAMAGE");
+const int WIZARD_DAMAGE = ConfigManager::getInstance().getIntegerValue("WIZARD_DAMAGE");
+const int FIREBALL_DAMAGE = ConfigManager::getInstance().getIntegerValue("FIREBALL_DAMAGE");
+const int FIREBALL_MANA_COST = ConfigManager::getInstance().getIntegerValue("FIREBALL_MANA_COST");
+
 
 const char PRINCESS_SYMB = 'P';
 const char KNIGHT_SYMB = 'K';
@@ -37,9 +39,9 @@ const char GRAVEYARD_SYMB = 'G';
 const char DRAGON_NEST_SYMB = 'N';
 const char MEDKIT_SYMB = '+';
 
-const int GRAVEYARD_COOLDOWN = 17;
-const int DRAGON_NEST_COOLDOWN = 19;
-const int MEDKIT_COOLDOWN = 3;
+const int GRAVEYARD_COOLDOWN = ConfigManager::getInstance().getIntegerValue("GRAVEYARD_COOLDOWN");
+const int DRAGON_NEST_COOLDOWN = ConfigManager::getInstance().getIntegerValue("DRAGON_NEST_COOLDOWN");
+const int MEDKIT_COOLDOWN = ConfigManager::getInstance().getIntegerValue("MEDKIT_COOLDOWN");
 
 const int MEDKIT_HEAL_POWER = 10;
 
