@@ -41,20 +41,10 @@ ConfigManager::~ConfigManager()
 
 void ConfigManager::init()
 {
-	try
+	_configFile = fopen(_fileName.c_str(), "r");
+	if (!_configFile)
 	{
-		_configFile = fopen(_fileName.c_str(), "r");
-		if (!_configFile)
-		{
-			throw FileOpeningError();
-		}
-	}
-	catch (FileOpeningError &err)
-	{
-		std::cout << err.what();
-		char c;
-		std::cin >> c;
-		exit(EXIT_FAILURE);
+		throw FileOpeningError();
 	}
 }
 
@@ -94,10 +84,20 @@ int ConfigManager::getIntegerValue(std::string field)
 
 std::string ConfigManager::getStringValue(std::string field)
 {
-	Type type = _config[field.c_str()].GetType();
-	if (type != kStringType)
+	try
 	{
-		throw GetStringValueError(field);
+		Type type = _config[field.c_str()].GetType();
+		if (type != kStringType)
+		{
+			throw GetStringValueError(field);
+		}
+	}
+	catch (GetStringValueError &err)
+	{
+		std::cout << err.what();
+		char c;
+		std::cin >> c;
+		exit(EXIT_FAILURE);
 	}
 
 	return _config[field.c_str()].GetString();

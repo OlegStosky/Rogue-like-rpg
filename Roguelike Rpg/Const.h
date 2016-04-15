@@ -5,6 +5,7 @@
 #include "Vec2i.h"
 #include "ConfigManager.h"
 
+//a* algorithm constants //
 const int INF = INT_MAX;
 const int G_DISTANCE = 10;
 
@@ -27,6 +28,11 @@ const int WIZARD_DAMAGE = ConfigManager::getInstance().getIntegerValue("WIZARD_D
 const int FIREBALL_DAMAGE = ConfigManager::getInstance().getIntegerValue("FIREBALL_DAMAGE");
 const int FIREBALL_MANA_COST = ConfigManager::getInstance().getIntegerValue("FIREBALL_MANA_COST");
 
+const int GRAVEYARD_COOLDOWN = ConfigManager::getInstance().getIntegerValue("GRAVEYARD_COOLDOWN");
+const int DRAGON_NEST_COOLDOWN = ConfigManager::getInstance().getIntegerValue("DRAGON_NEST_COOLDOWN");
+const int MEDKIT_COOLDOWN = ConfigManager::getInstance().getIntegerValue("MEDKIT_COOLDOWN");
+
+const int MEDKIT_HEAL_POWER = ConfigManager::getInstance().getIntegerValue("MEDKIT_HEAL_POWER");
 
 const char PRINCESS_SYMB = 'P';
 const char KNIGHT_SYMB = 'K';
@@ -38,12 +44,6 @@ const char WOOD_BLOCK_SYMB = '#';
 const char GRAVEYARD_SYMB = 'G';
 const char DRAGON_NEST_SYMB = 'N';
 const char MEDKIT_SYMB = '+';
-
-const int GRAVEYARD_COOLDOWN = ConfigManager::getInstance().getIntegerValue("GRAVEYARD_COOLDOWN");
-const int DRAGON_NEST_COOLDOWN = ConfigManager::getInstance().getIntegerValue("DRAGON_NEST_COOLDOWN");
-const int MEDKIT_COOLDOWN = ConfigManager::getInstance().getIntegerValue("MEDKIT_COOLDOWN");
-
-const int MEDKIT_HEAL_POWER = 10;
 
 const std::string PRINCESS_DEATH_MSG = "Princess is dead. You lost!";
 const std::string HERO_DEATH_MSG = "Hero is dead";
