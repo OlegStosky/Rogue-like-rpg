@@ -20,11 +20,6 @@ ConfigManager::ConfigManager()
 	catch (FileOpeningError &err)
 	{
 		std::cout << err.what() << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	catch (JsonParseError &err)
-	{
-		std::cout << err.what() << std::endl;
 		char c;
 		std::cin >> c;
 		exit(EXIT_FAILURE);
@@ -56,8 +51,10 @@ void ConfigManager::readConfig()
 	if (!error)
 	{
 
-		throw JsonParseError(strcat(strcat(const_cast<char*>(GetParseError_En(error.Code())), " "),
-			std::to_string(error.Offset()).c_str()));
+		std::cout << "JSON parse error: " << rapidjson::GetParseError_En(error.Code()) << " " << error.Offset() << std::endl;
+		char c;
+		std::cin >> c;
+		exit(EXIT_FAILURE);
 	}
 }
 
